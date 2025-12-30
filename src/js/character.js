@@ -1,3 +1,4 @@
+import { downloadCharacterBundle, downloadSelection } from './downloads.js';
 import { fetchCharacterData } from './site-data.js';
 
 const nameEl = document.getElementById('characterName');
@@ -16,6 +17,8 @@ const moduleControls = document.getElementById('moduleControls');
 const transformControls = document.getElementById('transformControls');
 const outputControls = document.getElementById('outputControls');
 const configSummary = document.getElementById('configSummary');
+const downloadPrimaryButton = document.getElementById('downloadPrimary');
+const downloadAllButton = document.getElementById('downloadAll');
 
 const outputOptions = [
   { id: 'json', label: 'SillyTavern JSON' },
@@ -106,6 +109,18 @@ function renderSummary(state, modules, transforms) {
       </ul>
     </div>
   `;
+}
+
+async function runDownload(button, action) {
+  if (!button) return;
+  button.disabled = true;
+  try {
+    await action();
+  } catch (error) {
+    setError('Download failed. Please try again.');
+  } finally {
+    button.disabled = false;
+  }
 }
 
 function renderProvenanceModal(data) {
@@ -394,6 +409,31 @@ async function loadCharacter() {
 
     renderSummary(state, modules, transforms);
     updateUrl(state);
+
+    if (downloadPrimaryButton) {
+      downloadPrimaryButton.addEventListener('click', () => {
+        runDownload(downloadPrimaryButton, () =>
+          downloadSelection({
+            character: data,
+            moduleIds: Array.from(state.modules),
+            transformId: state.transform,
+            outputType: state.output
+          })
+        );
+      });
+    }
+
+    if (downloadAllButton) {
+      downloadAllButton.addEventListener('click', () => {
+        runDownload(downloadAllButton, () =>
+          downloadCharacterBundle({
+            character: data,
+            moduleIds: Array.from(state.modules),
+            transformId: state.transform
+          })
+        );
+      });
+    }
   } catch (error) {
     setError('Unable to load this character yet. Please try again later.');
   }

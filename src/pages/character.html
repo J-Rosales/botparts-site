@@ -94,7 +94,7 @@
           <div class="download-panel">
             <button class="nav-cta" type="button" id="downloadPrimary">Download selection</button>
             <button class="secondary-button" type="button" id="downloadAll">Download everything</button>
-            <p class="download-note">Download actions will be wired to the generator and bundle layers.</p>
+            <p class="download-note">PNG downloads use the stored card image when available, otherwise a metadata placeholder.</p>
           </div>
         </div>
       </aside>
@@ -113,6 +113,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script type="module" src="../js/nav.js"></script>
   <script type="module" src="../js/character.js"></script>
 </body>

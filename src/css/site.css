@@ -382,6 +382,13 @@ main {
   gap: 10px;
 }
 
+.browse-download {
+  margin-top: 24px;
+  display: grid;
+  gap: 10px;
+  align-items: start;
+}
+
 .secondary-button {
   background: transparent;
   color: inherit;

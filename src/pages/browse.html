@@ -64,6 +64,10 @@
         </div>
         <div class="tag-filter-list" id="tagFilterList"></div>
       </div>
+      <div class="browse-download">
+        <button class="nav-cta" type="button" id="downloadEverythingSite">Download everything (defaults)</button>
+        <p class="download-note">Builds a ZIP with default JSON + PNG exports for every character.</p>
+      </div>
     </section>
 
     <section class="collections">
@@ -76,6 +80,7 @@
     Tip: click tags to cycle OFF → INCLUDE → EXCLUDE and share the URL to save filters.
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script type="module" src="../js/nav.js"></script>
   <script type="module" src="../js/browse.js"></script>
 </body>

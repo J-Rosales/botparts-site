@@ -1,3 +1,4 @@
+import { downloadSiteBundle } from './downloads.js';
 import { buildCharacterCard, fetchCharacterData, fetchIndexData } from './site-data.js';
 
 const browseGrid = document.getElementById('browseGrid');
@@ -6,6 +7,7 @@ const searchInput = document.getElementById('searchInput');
 const sortSelect = document.getElementById('sortSelect');
 const tagFilterList = document.getElementById('tagFilterList');
 const filterSummary = document.getElementById('filterSummary');
+const downloadEverythingButton = document.getElementById('downloadEverythingSite');
 
 const tagStates = new Map();
 const tagLabels = new Map();
@@ -16,6 +18,25 @@ const TAG_STATE_CYCLE = ['off', 'include', 'exclude'];
 
 function normalizeTag(tag) {
   return tag.trim().toLowerCase();
+}
+
+async function runDownload(button, action) {
+  if (!button) return;
+  button.disabled = true;
+  const originalLabel = button.textContent;
+  button.textContent = 'Building ZIP...';
+  try {
+    await action();
+  } catch (error) {
+    button.textContent = 'Download failed. Try again?';
+    setTimeout(() => {
+      button.textContent = originalLabel;
+    }, 2000);
+    button.disabled = false;
+    return;
+  }
+  button.textContent = originalLabel;
+  button.disabled = false;
 }
 
 function getTagState(tag) {
@@ -312,6 +333,11 @@ async function loadBrowse() {
 
     searchInput?.addEventListener('input', applyFilters);
     sortSelect?.addEventListener('change', applyFilters);
+    if (downloadEverythingButton) {
+      downloadEverythingButton.addEventListener('click', () => {
+        runDownload(downloadEverythingButton, () => downloadSiteBundle());
+      });
+    }
 
     applyFilters();
   } catch (error) {
