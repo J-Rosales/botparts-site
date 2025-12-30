@@ -10,7 +10,7 @@ Implement the character entry “store-like” view:
 
 ## Already decided
 - Each character has variants/modules selectable by toggles.
-- Each character has model transforms (schema-like vs natural language) and transforms may affect content and/or formatting.
+- Each character has model transforms (schema-like vs natural language) and transforms affect **formatting only**.
 - Download area replaces “add to cart” (user selects options and downloads).
 
 ## Implementation clarifications
@@ -43,6 +43,11 @@ Implement the character entry “store-like” view:
   - transform mode selector
   - output type selector (JSON/text/PNG)
 - Provide a “current config summary” section (what is selected) to reduce user error.
+
+## Clarification: Static Assembly (No LLM)
+All toggles select **predefined, static modules** for inclusion in the output. The UI must present
+module choices as deterministic content selections. Transforms are separate controls that only
+change rendering/format for the selected content; they do **not** choose or rewrite content.
 
 ## Acceptance criteria
 - Fully keyboard operable controls.

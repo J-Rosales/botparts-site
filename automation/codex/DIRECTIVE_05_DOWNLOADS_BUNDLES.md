@@ -34,6 +34,11 @@ Provide reliable client-side downloads:
   - apply defaults (or prompt user once)
   - build ZIP with top-level manifest
 
+## Clarification: Static Assembly (No LLM)
+All downloads must be produced from **static, pre-authored fragments** assembled deterministically
+based on selected modules. The download pipeline must not invoke any LLM, inference, or rewriting;
+it only exports the composed spec_v2 JSON/text/PNG using the chosen format transform.
+
 ## Acceptance criteria
 - Downloads work in modern Chromium/Firefox.
 - ZIPs include deterministic paths and filenames.
