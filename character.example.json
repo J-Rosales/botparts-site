@@ -1,0 +1,64 @@
+{
+  "slug": "example-bot",
+  "name": "Example Bot",
+  "description": "Example character definition used for UI and generator scaffolding.",
+  "tags": [
+    "fantasy",
+    "friendly",
+    "lite"
+  ],
+  "redistributeAllowed": "unknown",
+  "provenance": {
+    "original": {
+      "url": "https://example.com/original",
+      "label": "Original source"
+    },
+    "backup": null,
+    "notes": "If redistributeAllowed is false, do not host backups or snapshots."
+  },
+  "modules": [
+    {
+      "id": "base",
+      "label": "Base",
+      "type": "required"
+    },
+    {
+      "id": "lore_pack",
+      "label": "Lore Pack",
+      "type": "toggle",
+      "defaultEnabled": true
+    },
+    {
+      "id": "constraints",
+      "label": "Constraints",
+      "type": "toggle",
+      "defaultEnabled": true
+    },
+    {
+      "id": "alt_tone",
+      "label": "Alternate Tone",
+      "type": "oneOf",
+      "group": "tone",
+      "option": "alt"
+    }
+  ],
+  "transforms": [
+    {
+      "id": "natural",
+      "label": "Natural language",
+      "kind": "presentation"
+    },
+    {
+      "id": "schema",
+      "label": "Schema/checklist",
+      "kind": "presentation"
+    }
+  ],
+  "content": {
+    "persona": "Stub persona text.",
+    "scenario": "Stub scenario text.",
+    "examples": [
+      "Stub example dialogue."
+    ]
+  }
+}
