@@ -17,10 +17,7 @@ This repository builds a **static Neocities website** that catalogs SillyTavern 
 - Outputs: support **(a)** ST character JSON, **(b)** text prompt pack(s), **(c)** PNG card embedding (may be phased), **(d)** “download everything” per character, and **(e)** “download everything” site-wide (with defined defaults).
 
 ## Repository structure (assumed)
-- `/src/` canonical site source (HTML/CSS/JS/data/assets)
-- `/public/` deploy output (may mirror `/src/` or be a build copy)
-- `/template-src/` unmodified third-party HTML template (verbatim)
-- `/automation/` Codex directives + schemas + pipeline notes
+- Enforce `automation/codex/directory_schema.md`
 
 ## How work is divided
 Codex should work from the directive files below. Each directive states:
