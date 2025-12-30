@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Catalogue | Bot Catalogue</title>
+  <link rel="stylesheet" href="../css/templatemo-noir-fashion.css">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body data-page="browse" data-base="../" data-page-base="">
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        <span class="logo-text">BOT CATALOGUE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link" data-nav-page="landing">Home</a></li>
+        <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
+        <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
+        <li><a href="about.html" class="nav-link" data-nav-page="about">About</a></li>
+        <li><a href="about.html#license" class="nav-cta">License</a></li>
+      </ul>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="../index.html" data-nav-page="landing">Home</a></li>
+      <li><a href="browse.html" data-nav-page="browse">Browse</a></li>
+      <li><a href="how-to.html" data-nav-page="howto">How To</a></li>
+      <li><a href="about.html" data-nav-page="about">About</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="section-header">
+        <h1 class="section-title">Browse the Catalogue</h1>
+        <p class="section-subtitle">Search and filter the full library of characters. Filters arrive in DIRECTIVE_02.</p>
+      </div>
+      <div class="input-shell">
+        <label for="searchInput">Search</label>
+        <input id="searchInput" type="text" placeholder="Search by name, tag, or vibe" disabled>
+        <span class="card-badge">Coming soon</span>
+      </div>
+    </section>
+
+    <section class="collections">
+      <div class="character-grid" id="browseGrid"></div>
+      <p class="notice hidden" id="browseEmpty">No catalogue entries have been added yet.</p>
+    </section>
+  </main>
+
+  <div class="footer-note">
+    Add tags and filters next to power advanced browsing.
+  </div>
+
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/browse.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character | Bot Catalogue</title>
+  <link rel="stylesheet" href="../css/templatemo-noir-fashion.css">
+  <link rel="stylesheet" href="../css/site.css">
+</head>
+<body data-base="../" data-page-base="">
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        <span class="logo-text">BOT CATALOGUE</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link" data-nav-page="landing">Home</a></li>
+        <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
+        <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
+        <li><a href="about.html" class="nav-link" data-nav-page="about">About</a></li>
+        <li><a href="about.html#license" class="nav-cta">License</a></li>
+      </ul>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <ul class="mobile-nav-links">
+      <li><a href="../index.html" data-nav-page="landing">Home</a></li>
+      <li><a href="browse.html" data-nav-page="browse">Browse</a></li>
+      <li><a href="how-to.html" data-nav-page="howto">How To</a></li>
+      <li><a href="about.html" data-nav-page="about">About</a></li>
+    </ul>
+  </div>
+
+  <main class="character-detail">
+    <div class="detail-header">
+      <p><a href="browse.html">&larr; Back to Browse</a></p>
+      <h1 id="characterName">Loading...</h1>
+      <p id="characterDescription"></p>
+      <div class="detail-tags" id="characterTags"></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-card">
+        <h2>Attribution</h2>
+        <p>Original source:</p>
+        <a id="characterSource" href="#" target="_blank" rel="noreferrer">Loading source...</a>
+      </div>
+      <div class="detail-card">
+        <h2>Status</h2>
+        <p class="notice" id="characterNotice">Loading status...</p>
+      </div>
+      <div class="detail-card">
+        <h2>Exports</h2>
+        <p>Exports and module toggles will be configured in later directives.</p>
+      </div>
+    </div>
+
+    <p class="notice hidden" id="characterError"></p>
+  </main>
+
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/character.js"></script>
+</body>
+</html>
