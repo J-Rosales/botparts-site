@@ -1,6 +1,8 @@
 import { downloadSiteBundle } from './downloads.js';
 import { buildCharacterCard, fetchCharacterData, fetchIndexData } from './site-data.js';
 
+console.debug('[CARD-WIRING] browse.js loaded');
+
 const browseGrid = document.getElementById('browseGrid');
 const browseEmpty = document.getElementById('browseEmpty');
 const searchInput = document.getElementById('searchInput');
@@ -148,7 +150,16 @@ function renderEntries(list) {
   }
   browseEmpty?.classList.add('hidden');
   list.forEach((entry) => {
-    browseGrid.appendChild(buildCharacterCard(entry));
+    const cardEl = buildCharacterCard(entry);
+    console.debug(
+      '[CARD-WIRING] built card tag=',
+      cardEl?.tagName,
+      'class=',
+      cardEl?.className,
+      'built-by=',
+      cardEl?.getAttribute?.('data-built-by'),
+    );
+    browseGrid.appendChild(cardEl);
   });
 }
 

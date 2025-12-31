@@ -134,6 +134,9 @@ export async function fetchCharacterData(slug) {
 export function buildCharacterCard(entry) {
   const card = document.createElement('article');
   card.className = 'character-card';
+  card.setAttribute('data-built-by', 'public/js/site-data.js::buildCharacterCard');
+  card.setAttribute('data-built-at', new Date().toISOString());
+  card.setAttribute('data-built-slug', entry?.slug ?? '');
 
   const pageBase = getPageBase();
   const slug = entry.slug || '';
