@@ -1,6 +1,4 @@
-const listContainer = document.getElementById('character-list');
 const featuredContainer = document.getElementById('featured-list');
-const indexStatus = document.getElementById('index-status');
 const featuredStatus = document.getElementById('featured-status');
 
 const buildCard = (entry) => {
@@ -35,27 +33,24 @@ const loadIndex = async () => {
         const entries = Array.isArray(data.entries) ? data.entries : [];
 
         if (!entries.length) {
-            indexStatus.textContent = 'No entries were found in data/index.json.';
             featuredStatus.textContent = 'No featured bots are available yet.';
             return;
         }
 
-        renderList(listContainer, entries);
-
         const featuredEntries = entries.filter(entry => entry.featured);
-        const featuredList = featuredEntries.length ? featuredEntries : entries.slice(0, 3);
-        renderList(featuredContainer, featuredList);
+        if (!featuredEntries.length) {
+            featuredStatus.textContent = 'No featured bots are available yet.';
+            return;
+        }
+        renderList(featuredContainer, featuredEntries);
     } catch (error) {
         const message = 'Unable to load catalogue data. Please check the data folder.';
-        if (indexStatus) {
-            indexStatus.textContent = message;
-        }
         if (featuredStatus) {
             featuredStatus.textContent = message;
         }
     }
 };
 
-if (listContainer && featuredContainer) {
+if (featuredContainer && featuredStatus) {
     loadIndex();
 }
