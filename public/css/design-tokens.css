@@ -57,4 +57,5 @@
     --card-footer-gap: var(--space-3);
     --card-icon-hit-area: var(--space-7);
     --card-icon-size: var(--space-5);
+    --card-content-radius: 2px;
 }

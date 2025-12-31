@@ -52,6 +52,7 @@ main {
     display: grid;
     gap: var(--card-row-gap);
     padding: var(--card-padding);
+    border-radius: var(--card-content-radius);
 }
 
 .character-card .card-link {
@@ -72,7 +73,7 @@ main {
 }
 
 .character-card .card-image-row {
-    border-radius: var(--radius-md);
+    border-radius: 0;
     overflow: hidden;
     background: var(--color-surface-2);
 }
@@ -81,6 +82,7 @@ main {
     display: block;
     width: 100%;
     height: auto;
+    border-radius: 0;
 }
 
 .character-card .card-image-row span {
