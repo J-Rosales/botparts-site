@@ -1,4 +1,18 @@
 const defaultBase = '';
+// DEV-ONLY: localhost cache-busting helper for local testing. Safe to remove later.
+const IS_LOCALHOST = typeof window !== 'undefined'
+  && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const DEV_CACHE_BUST = IS_LOCALHOST ? String(Date.now()) : '';
+
+if (IS_LOCALHOST) {
+  console.debug('[DEV] cache-busting enabled');
+}
+
+export function withDevCacheBust(url) {
+  if (!DEV_CACHE_BUST || !url) return url;
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}dev=${DEV_CACHE_BUST}`;
+}
 const spoilerState = new Map();
 const likedState = new Map();
 const chipRows = new Set();
@@ -115,7 +129,7 @@ if (typeof window !== 'undefined') {
 
 export async function fetchIndexData() {
   const base = getBasePath();
-  const response = await fetch(`${base}data/index.json`);
+  const response = await fetch(withDevCacheBust(`${base}data/index.json`));
   if (!response.ok) {
     throw new Error('Unable to load index data.');
   }
@@ -124,7 +138,7 @@ export async function fetchIndexData() {
 
 export async function fetchCharacterData(slug) {
   const base = getBasePath();
-  const response = await fetch(`${base}data/characters/${slug}.json`);
+  const response = await fetch(withDevCacheBust(`${base}data/characters/${slug}.json`));
   if (!response.ok) {
     throw new Error(`Character not found: ${slug}`);
   }

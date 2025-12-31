@@ -1,5 +1,5 @@
 import { compileCharacter, emitPngPlaceholder, emitSillyTavernJson, emitTextPacks } from './generation.js';
-import { fetchCharacterData, fetchIndexData, getBasePath } from './site-data.js';
+import { fetchCharacterData, fetchIndexData, getBasePath, withDevCacheBust } from './site-data.js';
 
 const ZIP_MIME = 'application/zip';
 const JSON_MIME = 'application/json';
@@ -84,7 +84,7 @@ async function fetchPngAsset(character) {
     null;
   const resolved = resolveAssetUrl(candidate);
   if (!resolved) return null;
-  const response = await fetch(resolved);
+  const response = await fetch(withDevCacheBust(resolved));
   if (!response.ok) return null;
   const blob = await response.blob();
   const name = candidate.split('/').pop() || `${character.slug}.png`;
