@@ -10,9 +10,21 @@
 <body data-page="landing" data-base="" data-page-base="pages/">
   <nav id="navbar">
     <div class="nav-container">
-      <a href="index.html" class="logo-link">
-        <span class="logo-text">BOT CATALOGUE</span>
-      </a>
+      <div class="nav-top">
+        <div class="nav-top-spacer" aria-hidden="true"></div>
+        <a href="index.html" class="logo-link">
+          <span class="logo-text">BOT CATALOGUE</span>
+        </a>
+        <div class="nav-theme">
+          <label class="nav-theme-label" for="themeSelect">theme</label>
+          <select class="nav-theme-select" id="themeSelect" name="theme">
+            <option value="dark">dark</option>
+            <option value="light">light</option>
+            <option value="noir">noir</option>
+            <option value="classic">classic</option>
+          </select>
+        </div>
+      </div>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link" data-nav-page="landing">Home</a></li>
         <li><a href="pages/browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
@@ -20,22 +32,8 @@
         <li><a href="pages/about.html" class="nav-link" data-nav-page="about">About</a></li>
         <li><a href="pages/about.html#license" class="nav-cta">License</a></li>
       </ul>
-      <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
     </div>
   </nav>
-
-  <div class="mobile-nav" id="mobileNav">
-    <ul class="mobile-nav-links">
-      <li><a href="index.html" data-nav-page="landing">Home</a></li>
-      <li><a href="pages/browse.html" data-nav-page="browse">Browse</a></li>
-      <li><a href="pages/how-to.html" data-nav-page="howto">How To</a></li>
-      <li><a href="pages/about.html" data-nav-page="about">About</a></li>
-    </ul>
-  </div>
 
   <section class="collections" id="featured">
     <div class="section-header">
