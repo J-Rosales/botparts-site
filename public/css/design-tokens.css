@@ -33,6 +33,28 @@
     --radius-xl: 28px;
     --radius-pill: 999px;
 
+    --border-width: 1px;
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+
     --card-width: 220px;
     --card-padding: 32px;
+    --card-row-gap: var(--space-4);
+    --card-name-padding-block: var(--space-2);
+    --card-name-padding-inline: var(--space-1);
+    --card-name-font-size: var(--font-xl);
+    --card-name-line-height: 1.2;
+    --card-description-font-size: var(--font-sm);
+    --card-description-line-height: 1.5;
+    --card-description-gap: var(--space-2);
+    --card-chip-row-height: var(--space-7);
+    --card-chip-line-height: 1.1;
+    --card-chip-gap: var(--space-2);
+    --card-chip-padding-block: var(--space-1);
+    --card-chip-padding-inline: var(--space-3);
+    --card-chip-font-size: var(--font-xs);
+    --card-footer-height: var(--space-7);
+    --card-footer-gap: var(--space-3);
+    --card-icon-hit-area: var(--space-7);
+    --card-icon-size: var(--space-5);
 }
