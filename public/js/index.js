@@ -1,25 +1,12 @@
 const featuredContainer = document.getElementById('featured-list');
 const featuredStatus = document.getElementById('featured-status');
 
-const buildCard = (entry) => {
-    const card = document.createElement('a');
-    card.className = 'character-card';
-    card.href = `character.html?slug=${encodeURIComponent(entry.slug)}`;
+let hasLoggedCardBuilder = false;
 
-    const title = document.createElement('h3');
-    title.textContent = entry.name || entry.slug;
-
-    const description = document.createElement('p');
-    description.textContent = entry.description || 'No description provided yet.';
-
-    card.append(title, description);
-    return card;
-};
-
-const renderList = (container, entries) => {
+const renderList = (container, entries, buildCharacterCard) => {
     container.innerHTML = '';
     entries.forEach(entry => {
-        container.append(buildCard(entry));
+        container.append(buildCharacterCard(entry));
     });
 };
 
@@ -42,7 +29,12 @@ const loadIndex = async () => {
             featuredStatus.textContent = 'No featured bots are available yet.';
             return;
         }
-        renderList(featuredContainer, featuredEntries);
+        const { buildCharacterCard } = await import('./site-data.js');
+        if (!hasLoggedCardBuilder) {
+            console.debug('[catalogue] buildCharacterCard active for featured cards');
+            hasLoggedCardBuilder = true;
+        }
+        renderList(featuredContainer, featuredEntries, buildCharacterCard);
     } catch (error) {
         const message = 'Unable to load catalogue data. Please check the data folder.';
         if (featuredStatus) {
