@@ -1,6 +1,8 @@
 const featuredContainer = document.getElementById('featured-list');
 const featuredStatus = document.getElementById('featured-status');
 
+console.debug('[CARD-WIRING] public/js/index.js loaded');
+
 let hasLoggedCardBuilder = false;
 
 const loadIndex = async () => {
@@ -29,7 +31,16 @@ const loadIndex = async () => {
         }
         featuredContainer.innerHTML = '';
         featuredEntries.forEach(entry => {
-            featuredContainer.append(buildCharacterCard(entry));
+            const cardEl = buildCharacterCard(entry);
+            console.debug(
+                '[CARD-WIRING] built card tag=',
+                cardEl?.tagName,
+                'class=',
+                cardEl?.className,
+                'built-by=',
+                cardEl?.getAttribute?.('data-built-by'),
+            );
+            featuredContainer.appendChild(cardEl);
         });
     } catch (error) {
         const message = 'Unable to load catalogue data. Please check the data folder.';
