@@ -86,6 +86,23 @@ main {
     font-size: var(--font-xs);
 }
 
+.icon {
+    width: var(--icon-size, 20px);
+    height: var(--icon-size, 20px);
+    stroke: currentColor;
+    fill: none;
+    stroke-width: var(--icon-stroke-width, 2);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
 @media (max-width: 768px) {
     main {
         padding-top: 100px;

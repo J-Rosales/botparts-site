@@ -43,3 +43,7 @@ Define the site’s page structure and navigation behavior for a static Neocitie
 - Data: `src/data/index.json` (provides slug + display fields).
 - Character data: `src/data/characters/<slug>.json`.
 - Catalogue and filter behavior is handled by DIRECTIVE_02.
+
+## Icon system note
+- Icons must use the centralized SVG symbol system in `public/icons/icons.svg`.
+- Add new icons by defining a `<symbol>` in the shared icon sprite.

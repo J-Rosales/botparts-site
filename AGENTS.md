@@ -105,3 +105,19 @@ See `public/css/DESIGN_TOKENS.md` for the token system and usage rules.
 
 - For **VISUAL TASK** work, prefer edits in `public/css/design-tokens.css`.
 - Do not introduce new styling systems (Bootstrap/Tailwind/Sass) without explicit user approval.
+
+## Icons
+- All icons must come from `public/icons/icons.svg`.
+- When a task mentions “add an icon” or “give it an X icon,” use the centralized SVG symbol system.
+- External icon libraries (Font Awesome, icon fonts, CDNs) are forbidden unless explicitly approved.
+- Do not inline raw SVG `<path>` elements in page HTML.
+- Usage pattern:
+  ```html
+  <button class="icon-button" aria-label="Close">
+    <svg class="icon" aria-hidden="true">
+      <use href="#icon-x"></use>
+    </svg>
+  </button>
+  ```
+- **UX TASKS** may add icon markup using the standard pattern.
+- **VISUAL TASKS** may only adjust icon appearance via CSS (prefer tokens).

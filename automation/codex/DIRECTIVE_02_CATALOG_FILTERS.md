@@ -43,3 +43,7 @@ Deliver a modern catalogue grid on landing (featured) and/or a browse page with:
 ## Integration points
 - Consumes `src/data/index.json` and outputs to DOM.
 - Card click navigates according to DIRECTIVE_01.
+
+## Icon system note
+- Icons must use the centralized SVG symbol system in `public/icons/icons.svg`.
+- Add new icons by defining a `<symbol>` in the shared icon sprite.

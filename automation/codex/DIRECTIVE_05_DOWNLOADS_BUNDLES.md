@@ -47,3 +47,7 @@ it only exports the composed spec_v2 JSON/text/PNG using the chosen format trans
 ## Integration points
 - Consumes generated outputs from DIRECTIVE_04.
 - Triggered from UI in DIRECTIVE_03.
+
+## Icon system note
+- Icons must use the centralized SVG symbol system in `public/icons/icons.svg`.
+- Add new icons by defining a `<symbol>` in the shared icon sprite.

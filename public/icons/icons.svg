@@ -1,0 +1,23 @@
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 6l12 12" />
+    <path d="M18 6l-12 12" />
+  </symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v10" />
+    <path d="M8 10l4 4 4-4" />
+    <path d="M4 18h16" />
+  </symbol>
+  <symbol id="icon-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 4h6v6" />
+    <path d="M10 14l10-10" />
+    <path d="M20 14v6h-16v-16h6" />
+  </symbol>
+  <symbol id="icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="6" cy="12" r="2" />
+    <circle cx="18" cy="6" r="2" />
+    <circle cx="18" cy="18" r="2" />
+    <path d="M8 11l8-4" />
+    <path d="M8 13l8 4" />
+  </symbol>
+</svg>

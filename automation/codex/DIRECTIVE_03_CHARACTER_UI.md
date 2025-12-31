@@ -58,3 +58,7 @@ change rendering/format for the selected content; they do **not** choose or rewr
 - Uses schema from DIRECTIVE_06.
 - Calls generation layer from DIRECTIVE_04.
 - Calls download layer from DIRECTIVE_05.
+
+## Icon system note
+- Icons must use the centralized SVG symbol system in `public/icons/icons.svg`.
+- Add new icons by defining a `<symbol>` in the shared icon sprite.
