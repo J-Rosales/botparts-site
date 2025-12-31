@@ -77,3 +77,25 @@ Tests must not modify files or assume network access.
 
 ## Mental model
 Think of this repo as a **static renderer and exporter**, not a build system.
+
+## UX vs Visual task discipline (enforced)
+Before performing any task, **explicitly classify the request** as one of:
+- **UX TASK** (structure, interaction, semantics, behavior)
+- **VISUAL TASK** (appearance only: CSS, tokens, spacing, color, emphasis)
+- **MIXED TASK** (rare; must be justified)
+
+### Mandatory behavior
+- If a task is not clearly labeled, **pause and ask for classification**.
+- If a task is labeled **UX TASK**:
+  - You may modify HTML structure and JS behavior.
+  - You must not perform visual styling beyond minimal defaults needed for usability.
+- If a task is labeled **VISUAL TASK**:
+  - You may modify CSS (preferably via design tokens).
+  - You must not modify HTML structure or JS logic.
+- If a task is labeled **MIXED TASK**:
+  - Explain why separation is not possible before proceeding.
+
+### Enforcement
+- Treat this instruction as part of `AGENTS.md`.
+- Reject or flag changes that cross task boundaries.
+- Keep diffs minimal and scoped to the allowed surfaces.
