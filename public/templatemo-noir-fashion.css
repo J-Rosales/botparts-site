@@ -42,13 +42,12 @@ body {
 
 /* Navigation */
 nav {
-	position: fixed;
+	position: static;
 	width: 100%;
 	padding: 20px 50px;
 	z-index: 1000;
 	background: rgba(0, 0, 0, 0.95);
 	backdrop-filter: blur(10px);
-	animation: slideDown 0.8s ease;
 	transition: all 0.3s ease;
 }
 
@@ -1725,18 +1724,6 @@ footer {
 
 	to {
 		transform: rotate(360deg);
-	}
-}
-
-@keyframes slideDown {
-	from {
-		transform: translateY(-100%);
-		opacity: 0;
-	}
-
-	to {
-		transform: translateY(0);
-		opacity: 1;
 	}
 }
 
