@@ -197,6 +197,16 @@ main {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+@media (min-width: 1600px) {
+  .character-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .character-card {
+    max-width: none;
+  }
+}
+
 .card-link {
   color: inherit;
   text-decoration: none;
