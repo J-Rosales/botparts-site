@@ -1,7 +1,7 @@
 :root {
   color-scheme: dark;
   --card-width: 220px;
-  --card-grid-gap: 24px;
+  --card-grid-gap: 8px;
   --card-icon-hit-area: 32px;
   --card-icon-size: 20px;
 }
@@ -174,7 +174,10 @@ main {
 
 .character-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, var(--card-width));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--card-width)), var(--card-width))
+  );
   gap: var(--card-grid-gap);
   justify-content: start;
   justify-items: center;
