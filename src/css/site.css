@@ -33,6 +33,26 @@ nav.scrolled {
 .logo-text {
   font-weight: 700;
   letter-spacing: 0.2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: transparent;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.logo-text::before {
+  content: "";
+  width: 32px;
+  height: 32px;
+  background: url("../assets/icons/logoIcon.svg") no-repeat center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.logo-text::after {
+  content: "BOTPARTS";
+  color: var(--text);
 }
 
 .nav-container {
@@ -44,6 +64,7 @@ nav.scrolled {
   max-width: 1400px;
   padding: 0 clamp(24px, 4vw, 50px);
   margin: 0 auto;
+  position: relative;
 }
 
 .nav-top {
@@ -75,6 +96,9 @@ nav.scrolled {
   gap: 10px;
   flex: 1;
   justify-content: flex-end;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .nav-theme-label {
