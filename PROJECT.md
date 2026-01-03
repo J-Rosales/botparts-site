@@ -45,6 +45,20 @@ When working in this repo:
 - If a change requires schema modification, **stop** and list required schema diffs instead.
 - Read `PROJECT.md` and `automation/codex/AGENTS.md` before implementing changes.
 
+## Local preview
+The `src/` pages load JavaScript via `<script type="module">`, so you must serve them over HTTP
+with `.js` mapped to `text/javascript`. Do **not** open `src/index.html` via `file://`, or the
+browser will reject module scripts with MIME type errors.
+
+Recommended preview commands:
+1. `python -m http.server --directory src`
+2. `npx http-server src`
+
+Then open `http://localhost:<port>/index.html`.
+
+Use `public/` when you want the deployable static output (it avoids module-script loading issues
+because it does not rely on ES module entrypoints for page bootstrapping).
+
 ## Theme system
 Theme tokens live in `src/css/themes.css`, and component overrides are applied in
 `src/css/theme-bridge.css`. The theme switcher logic is in `src/js/theme.js` and
