@@ -318,17 +318,19 @@ export function buildCharacterCard(entry) {
 
   content.appendChild(tagRow);
 
+  const toggleRow = document.createElement('div');
+  toggleRow.className = 'spoiler-toggle-row';
+  const toggleButton = document.createElement('button');
+  toggleButton.type = 'button';
+  toggleButton.className = 'spoiler-toggle';
+  toggleButton.textContent = isSpoilerOpen ? 'hide spoiler tags' : 'show spoiler tags';
+  toggleRow.appendChild(toggleButton);
+  content.appendChild(toggleRow);
+
   if (spoilerTags.length) {
-    const toggleRow = document.createElement('div');
-    toggleRow.className = 'spoiler-toggle-row';
-    const toggleButton = document.createElement('button');
-    toggleButton.type = 'button';
-    toggleButton.className = 'spoiler-toggle';
-    toggleButton.textContent = isSpoilerOpen ? 'hide spoiler tags' : 'show spoiler tags';
     const spoilerRowId = `spoiler-tags-${slug}`;
     toggleButton.setAttribute('aria-expanded', String(isSpoilerOpen));
     toggleButton.setAttribute('aria-controls', spoilerRowId);
-    toggleRow.appendChild(toggleButton);
 
     const spoilerRow = document.createElement('div');
     spoilerRow.className = 'card-tags spoiler-tags';
@@ -348,9 +350,12 @@ export function buildCharacterCard(entry) {
       }
     });
 
-    content.appendChild(toggleRow);
     content.appendChild(spoilerRow);
     registerChipRow(spoilerRow, spoilerTags);
+  } else {
+    toggleButton.disabled = true;
+    toggleButton.classList.add('is-disabled');
+    toggleButton.setAttribute('aria-disabled', 'true');
   }
 
   content.appendChild(footerRow);

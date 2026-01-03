@@ -183,6 +183,11 @@ main {
     text-align: center;
 }
 
+.character-card .spoiler-toggle.is-disabled {
+    border-style: dotted;
+    cursor: default;
+}
+
 .character-card .spoiler-toggle:hover {
     color: var(--color-accent-strong);
     border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
