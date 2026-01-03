@@ -15,7 +15,7 @@ nav.scrolled {
   box-shadow: var(--shadow);
 }
 
-.logo-text::after {
+.brand-text {
   background: linear-gradient(135deg, var(--text), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -33,13 +33,13 @@ a:hover {
   color: var(--accent);
 }
 
-.nav-links a.active,
-.nav-links .active,
+.navbar-links a.active,
+.navbar-links .active,
 .mobile-nav-links .active {
   color: var(--accent);
 }
 
-.nav-links a.active::after {
+.navbar-links a.active::after {
   background: var(--accent);
 }
 
@@ -108,7 +108,7 @@ a:hover {
 .tag-filter-summary,
 .download-note,
 .footer-note,
-.nav-links a,
+.navbar-links a,
 .nav-theme-label,
 .chip-status,
 .config-group-title {

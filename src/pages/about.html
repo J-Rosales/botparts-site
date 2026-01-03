@@ -17,13 +17,14 @@
   <link rel="stylesheet" href="../css/theme-bridge.css">
 </head>
 <body data-page="about" data-base="../" data-page-base="">
-  <nav id="navbar">
-    <div class="nav-container">
-      <div class="nav-top">
-        <div class="nav-top-spacer" aria-hidden="true"></div>
-        <a href="../index.html" class="logo-link">
-          <span class="logo-text">BOT CATALOGUE</span>
+  <nav id="navbar" class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-top">
+        <a class="brand" href="../index.html" aria-label="Botparts home">
+          <span class="brand-icon" aria-hidden="true"></span>
+          <span class="brand-text">BOTPARTS</span>
         </a>
+
         <div class="nav-theme">
           <label class="nav-theme-label" for="themeSelect">theme</label>
           <select class="nav-theme-select" id="themeSelect" name="theme">
@@ -36,7 +37,8 @@
           </select>
         </div>
       </div>
-      <ul class="nav-links">
+
+      <ul class="navbar-links" aria-label="Primary">
         <li><a href="../index.html" class="nav-link" data-nav-page="landing">Home</a></li>
         <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
         <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
