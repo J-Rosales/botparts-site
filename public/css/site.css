@@ -32,7 +32,7 @@ main {
     flex-direction: column;
     gap: var(--card-row-gap);
     border-radius: 4px;
-    background: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+    background: var(--color-surface-2);
     border: var(--border-width) solid var(--color-border);
     text-decoration: none;
     color: inherit;
@@ -81,6 +81,9 @@ main {
     font-size: var(--card-name-font-size);
     line-height: var(--card-name-line-height);
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .character-card .card-image-row {
@@ -147,6 +150,7 @@ main {
     color: var(--color-text-muted);
     border: var(--border-width) dashed var(--color-border);
     background: color-mix(in srgb, var(--color-text-primary) 6%, transparent);
+    font-variant-caps: all-small-caps;
 }
 
 .character-card .spoiler-toggle-row {
@@ -154,23 +158,26 @@ main {
     align-items: center;
     justify-content: center;
     min-height: var(--space-4);
+    width: 100%;
 }
 
 .character-card .spoiler-toggle {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-pill);
     background: transparent;
-    color: var(--color-text-secondary);
+    color: var(--color-accent);
     padding: var(--space-1) var(--space-3);
     font-size: var(--font-xs);
     cursor: pointer;
-    transition: border 0.2s ease, color 0.2s ease, background 0.2s ease;
+    transition: border 0.2s ease, color 0.2s ease;
+    width: 100%;
+    text-align: center;
 }
 
 .character-card .spoiler-toggle:hover {
-    color: var(--color-text-primary);
+    color: var(--color-accent-strong);
     border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
-    background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+    background: transparent;
 }
 
 .character-card .spoiler-toggle:focus-visible {

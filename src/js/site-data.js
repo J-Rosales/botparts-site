@@ -46,6 +46,35 @@ function resolveEntryImage(entry) {
   return resolveAssetUrl(candidate);
 }
 
+const MONTH_ABBREVIATIONS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+function formatUploadDate(value) {
+  if (!value) return value;
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
+  if (!match) return value;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (!year || month < 1 || month > 12 || day < 1 || day > 31) {
+    return value;
+  }
+  const shortYear = String(year % 100).padStart(2, '0');
+  return `${MONTH_ABBREVIATIONS[month - 1]} ${day}, '${shortYear}`;
+}
+
 const PLACEHOLDER_COLORS = [
   { bg: 'ef476f', fg: 'fff9f4' },
   { bg: 'ffd166', fg: '1b1b1e' },
@@ -189,7 +218,9 @@ export function buildCharacterCard(entry) {
   const shortDescription = typeof entry.shortDescription === 'string'
     ? entry.shortDescription.trim()
     : '';
-  const uploadDate = typeof entry.uploadDate === 'string' ? entry.uploadDate.trim() : '';
+  const uploadDate = typeof entry.uploadDate === 'string'
+    ? formatUploadDate(entry.uploadDate.trim())
+    : '';
   const imageUrl = resolveEntryImage(entry);
   const resolvedImageUrl = imageUrl || buildPlaceholderImage(entry);
   const aiTokenLabel = entry.aiTokens != null && entry.aiTokens !== ''
