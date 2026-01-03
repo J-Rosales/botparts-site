@@ -60,10 +60,9 @@ nav.scrolled {
   grid-template-rows: auto auto;
   align-items: center;
   gap: 12px;
-  width: min(100%, 1400px);
-  max-width: 1400px;
+  width: 100%;
   padding: 0 clamp(24px, 4vw, 50px);
-  margin: 0 auto;
+  margin: 0;
   position: relative;
 }
 
