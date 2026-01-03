@@ -4,8 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bot Catalogue</title>
+  <script>
+    const storedTheme = localStorage.getItem('theme');
+    const defaultTheme = 'tomorrow';
+    const themes = ['tomorrow', 'photon', 'yotsuba', 'yotsuba-b', 'futaba', 'burichan'];
+    const resolvedTheme = themes.includes(storedTheme) ? storedTheme : defaultTheme;
+    document.documentElement.dataset.theme = resolvedTheme;
+  </script>
   <link rel="stylesheet" href="css/templatemo-noir-fashion.css">
   <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/theme-bridge.css">
 </head>
 <body data-page="landing" data-base="" data-page-base="pages/">
   <nav id="navbar">
@@ -18,10 +27,12 @@
         <div class="nav-theme">
           <label class="nav-theme-label" for="themeSelect">theme</label>
           <select class="nav-theme-select" id="themeSelect" name="theme">
-            <option value="dark">dark</option>
-            <option value="light">light</option>
-            <option value="noir">noir</option>
-            <option value="classic">classic</option>
+            <option value="tomorrow">tomorrow</option>
+            <option value="photon">photon</option>
+            <option value="yotsuba">yotsuba</option>
+            <option value="yotsuba-b">yotsuba b</option>
+            <option value="futaba">futaba</option>
+            <option value="burichan">burichan</option>
           </select>
         </div>
       </div>
@@ -100,6 +111,7 @@
     Browse, build, and download with confidence — all from a static catalogue.
   </div>
 
+  <script type="module" src="js/theme.js"></script>
   <script type="module" src="js/nav.js"></script>
   <script type="module" src="js/landing.js"></script>
 </body>

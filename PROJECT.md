@@ -44,3 +44,17 @@ When working in this repo:
 - Modify UI, JS, CSS, routing, and download logic only.
 - If a change requires schema modification, **stop** and list required schema diffs instead.
 - Read `PROJECT.md` and `automation/codex/AGENTS.md` before implementing changes.
+
+## Theme system
+Theme tokens live in `src/css/themes.css`, and component overrides are applied in
+`src/css/theme-bridge.css`. The theme switcher logic is in `src/js/theme.js` and
+is wired on every page via the `<select id="themeSelect">` control.
+
+### Add a new theme
+1. Add a new `html[data-theme=\"your-theme\"]` block in `src/css/themes.css`.
+2. Define the token values (backgrounds, text, links, accent, border, etc.).
+3. Add a matching `<option value=\"your-theme\">` entry in each page header.
+
+### Set the default theme
+Update `DEFAULT_THEME` in `src/js/theme.js` and the inline theme bootstrap
+script in each HTML `<head>` to the same theme name.

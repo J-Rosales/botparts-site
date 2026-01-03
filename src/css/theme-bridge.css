@@ -1,0 +1,206 @@
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+main,
+section,
+footer {
+  color: inherit;
+}
+
+nav,
+nav.scrolled {
+  background: var(--panel-2);
+  box-shadow: var(--shadow);
+}
+
+.logo-text {
+  background: linear-gradient(135deg, var(--text), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+.nav-links a.active,
+.nav-links .active,
+.mobile-nav-links .active {
+  color: var(--accent);
+}
+
+.nav-links a.active::after {
+  background: var(--accent);
+}
+
+.nav-theme-label {
+  color: var(--muted);
+}
+
+.nav-theme-select {
+  color: var(--text);
+  background: var(--panel-2);
+  border-color: var(--border);
+}
+
+.nav-theme-select option {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.nav-cta {
+  background: var(--accent);
+  color: var(--accent-contrast) !important;
+}
+
+.nav-cta:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow);
+}
+
+.hero-card,
+.character-card,
+.content-page .content-card,
+.character-media-card,
+.config-panel,
+.detail-card,
+.input-shell,
+.tag-filter-panel,
+.option-card,
+.config-summary,
+.modal-card,
+.module-item,
+.changelog li,
+.testimonial-card {
+  background: var(--panel);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.hero-card li,
+.option-card,
+.module-item {
+  background: var(--panel-2);
+  border-color: var(--border);
+}
+
+.character-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.character-media {
+  background: linear-gradient(135deg, var(--panel-2), var(--panel));
+}
+
+.character-media-placeholder,
+.meta-list dd,
+.tag-filter-summary,
+.download-note,
+.footer-note,
+.nav-links a,
+.nav-theme-label,
+.chip-status,
+.config-group-title {
+  color: var(--muted);
+}
+
+.meta-list dt,
+.section-title,
+.section-header .section-subtitle,
+.testimonials-header h3,
+.testimonials-header .section-subtitle {
+  color: var(--text);
+}
+
+.character-card .tag-pill {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.notice {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tag-filter-chip {
+  background: var(--panel-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.tag-filter-chip:hover,
+.tag-filter-chip:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.tag-filter-chip.is-include {
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--text);
+}
+
+.tag-filter-chip.is-exclude {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--text);
+}
+
+.provenance-chip,
+.chip-button,
+.tooltip-button,
+.secondary-button,
+.modal-close {
+  background: var(--panel-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.secondary-button:hover,
+.chip-button:hover,
+.tooltip-button:hover,
+.modal-close:hover {
+  border-color: var(--accent);
+}
+
+input,
+select,
+textarea,
+.module-item textarea,
+.input-shell input,
+.input-shell select {
+  background: var(--panel-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.code-block,
+pre,
+code {
+  background: var(--code-bg);
+  color: var(--code-text);
+}
+
+hr {
+  border-color: var(--border);
+}
