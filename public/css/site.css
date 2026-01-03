@@ -78,12 +78,15 @@ main {
     overflow: hidden;
     background: var(--color-surface-2);
     margin-inline: calc(var(--card-padding) * -1);
+    height: 256px;
 }
 
 .character-card .card-image-row img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     border-radius: 0;
 }
 
