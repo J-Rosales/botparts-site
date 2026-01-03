@@ -53,6 +53,7 @@ main {
     gap: var(--card-row-gap);
     padding: var(--card-padding);
     border-radius: var(--card-content-radius);
+    background: var(--color-surface-2);
 }
 
 .character-card .card-link {

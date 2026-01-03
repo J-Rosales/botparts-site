@@ -172,6 +172,7 @@ nav.scrolled {
 }
 
 .character-card .card-content {
+  background: var(--panel-2);
   padding: 20px;
 }
 

@@ -46,14 +46,14 @@ nav {
 	width: 100%;
 	padding: 20px 50px;
 	z-index: 1000;
-	background: rgba(0, 0, 0, 0.95);
+	background: var(--panel-2);
 	backdrop-filter: blur(10px);
 	transition: all 0.3s ease;
 }
 
 nav.scrolled {
 	padding: 15px 50px;
-	background: rgba(0, 0, 0, 0.98);
+	background: var(--panel-2);
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
