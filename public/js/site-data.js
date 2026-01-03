@@ -32,6 +32,35 @@ function resolveEntryImage(entry) {
   return resolveAssetUrl(candidate);
 }
 
+const PLACEHOLDER_COLORS = [
+  { bg: 'ef476f', fg: 'fff9f4' },
+  { bg: 'ffd166', fg: '1b1b1e' },
+  { bg: '06d6a0', fg: '073b4c' },
+  { bg: '118ab2', fg: 'fdfcdc' },
+  { bg: '8338ec', fg: 'fdf0ff' },
+  { bg: '3a86ff', fg: 'fefefe' },
+  { bg: 'ff8fab', fg: '2b2d42' },
+  { bg: '2ec4b6', fg: '0b132b' },
+  { bg: 'f4a261', fg: '1d3557' },
+  { bg: '8d99ae', fg: '1f2937' },
+];
+
+function hashString(value) {
+  if (!value) return 0;
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+function buildPlaceholderImage(entry) {
+  const seed = entry?.slug || entry?.name || 'character';
+  const index = hashString(seed) % PLACEHOLDER_COLORS.length;
+  const { bg, fg } = PLACEHOLDER_COLORS[index];
+  return `https://placehold.co/600x400/${bg}/${fg}`;
+}
+
 function createIcon(iconId) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('icon');
@@ -148,6 +177,7 @@ export function buildCharacterCard(entry) {
     : '';
   const uploadDate = typeof entry.uploadDate === 'string' ? entry.uploadDate.trim() : '';
   const imageUrl = resolveEntryImage(entry);
+  const resolvedImageUrl = imageUrl || buildPlaceholderImage(entry);
   const aiTokenLabel = entry.aiTokens != null && entry.aiTokens !== ''
     ? `AI tokens: ${entry.aiTokens}`
     : 'AI tokens: unknown';
@@ -173,17 +203,14 @@ export function buildCharacterCard(entry) {
   const imageLink = document.createElement('a');
   imageLink.className = 'card-link';
   imageLink.href = href;
-  if (imageUrl) {
-    const image = document.createElement('img');
-    image.src = imageUrl;
-    image.alt = entry.name ? `${entry.name} preview` : 'Character preview';
-    image.loading = 'lazy';
-    imageLink.appendChild(image);
-  } else {
-    const placeholder = document.createElement('span');
-    placeholder.textContent = 'No preview image';
-    imageLink.appendChild(placeholder);
+  const image = document.createElement('img');
+  image.src = resolvedImageUrl;
+  image.alt = entry.name ? `${entry.name} preview` : 'Character preview';
+  image.loading = 'lazy';
+  if (!imageUrl) {
+    image.dataset.placeholder = 'true';
   }
+  imageLink.appendChild(image);
   imageRow.appendChild(imageLink);
 
   const tagRow = document.createElement('div');
