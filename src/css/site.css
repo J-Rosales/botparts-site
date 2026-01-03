@@ -4,6 +4,8 @@
   --card-grid-gap: 8px;
   --card-icon-hit-area: 32px;
   --card-icon-size: 20px;
+  --card-footer-height: 32px;
+  --card-footer-gap: 12px;
 }
 
 body {
@@ -277,6 +279,10 @@ main {
   font-variant-caps: all-small-caps;
 }
 
+.character-card .spoiler-tags.is-hidden {
+  display: none;
+}
+
 .character-card .spoiler-toggle-row {
   display: flex;
   align-items: center;
@@ -300,6 +306,22 @@ main {
   color: var(--accent-hover);
 }
 
+.character-card .card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-height: var(--card-footer-height);
+  gap: var(--card-footer-gap);
+}
+
+.character-card .card-footer-actions {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: var(--card-footer-gap);
+}
+
 .character-card .icon {
   --icon-size: var(--card-icon-size);
 }
@@ -312,6 +334,10 @@ main {
   padding: 0;
   color: inherit;
   cursor: pointer;
+}
+
+.character-card .card-like-button.is-liked .icon {
+  fill: currentColor;
 }
 
 .page-hero {

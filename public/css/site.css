@@ -153,6 +153,10 @@ main {
     font-variant-caps: all-small-caps;
 }
 
+.character-card .spoiler-tags.is-hidden {
+    display: none;
+}
+
 .character-card .spoiler-toggle-row {
     display: flex;
     align-items: center;
@@ -233,6 +237,10 @@ main {
 
 .character-card .card-like-button.is-liked {
     color: var(--color-accent);
+}
+
+.character-card .card-like-button.is-liked .icon {
+    fill: currentColor;
 }
 
 .hero-panel {

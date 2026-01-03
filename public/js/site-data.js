@@ -320,11 +320,13 @@ export function buildCharacterCard(entry) {
     spoilerRow.className = 'card-tags spoiler-tags';
     spoilerRow.id = spoilerRowId;
     spoilerRow.hidden = !isSpoilerOpen;
+    spoilerRow.classList.toggle('is-hidden', !isSpoilerOpen);
 
     toggleButton.addEventListener('click', () => {
       const nextState = !(spoilerState.get(slug) ?? false);
       spoilerState.set(slug, nextState);
       spoilerRow.hidden = !nextState;
+      spoilerRow.classList.toggle('is-hidden', !nextState);
       toggleButton.textContent = nextState ? 'hide spoiler tags' : 'show spoiler tags';
       toggleButton.setAttribute('aria-expanded', String(nextState));
       if (nextState) {
