@@ -20,6 +20,15 @@
   --success-soft: rgba(79, 209, 163, 0.18);
   --code-bg: #121420;
   --code-text: #f2f2f2;
+  --gradient-surface-1: var(--panel);
+  --gradient-surface-2: var(--bg);
+  --gradient-accent-1: var(--accent);
+  --gradient-accent-2: var(--accent-hover);
+  --gradient-accent-strong: color-mix(in srgb, var(--accent) 60%, transparent);
+  --gradient-accent-soft: color-mix(in srgb, var(--accent) 20%, transparent);
+  --gradient-accent-faint: color-mix(in srgb, var(--accent) 8%, transparent);
+  --gradient-surface-strong: color-mix(in srgb, var(--bg) 65%, transparent);
+  --gradient-surface-soft: color-mix(in srgb, var(--bg) 35%, transparent);
 
   /* Legacy TemplateMo tokens mapped to the theme system. */
   --primary: var(--bg);

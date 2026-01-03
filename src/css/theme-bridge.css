@@ -99,7 +99,8 @@ a:hover {
 }
 
 .character-media {
-  background: linear-gradient(135deg, var(--panel-2), var(--panel));
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--gradient-surface-1) 35%, transparent), transparent),
+    linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 }
 
 .character-media-placeholder,
