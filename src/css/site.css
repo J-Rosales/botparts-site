@@ -2,6 +2,8 @@
   color-scheme: dark;
   --card-width: 220px;
   --card-grid-gap: 24px;
+  --card-icon-hit-area: 32px;
+  --card-icon-size: 20px;
 }
 
 body {
@@ -226,8 +228,30 @@ main {
   border-radius: 999px;
 }
 
+.character-card .icon {
+  --icon-size: var(--card-icon-size);
+}
+
+.character-card .icon-button {
+  width: var(--card-icon-hit-area);
+  height: var(--card-icon-hit-area);
+}
+
 .page-hero {
   padding: 140px 8% 80px;
+}
+
+.icon {
+  width: var(--icon-size, 20px);
+  height: var(--icon-size, 20px);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .page-hero .section-title {
