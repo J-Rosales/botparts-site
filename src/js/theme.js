@@ -14,6 +14,9 @@ const resolveTheme = (value) => (THEMES.has(value) ? value : DEFAULT_THEME);
 const applyTheme = (theme) => {
   const resolvedTheme = resolveTheme(theme);
   document.documentElement.dataset.theme = resolvedTheme;
+  if (document.body) {
+    document.body.dataset.theme = resolvedTheme;
+  }
   localStorage.setItem(THEME_STORAGE_KEY, resolvedTheme);
   return resolvedTheme;
 };
@@ -21,9 +24,8 @@ const applyTheme = (theme) => {
 const initThemeSwitcher = () => {
   const themeSelect = document.getElementById('themeSelect');
   const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-  const initialTheme = resolveTheme(storedTheme || document.documentElement.dataset.theme);
+  const initialTheme = applyTheme(storedTheme || document.documentElement.dataset.theme);
 
-  document.documentElement.dataset.theme = initialTheme;
   if (themeSelect) {
     themeSelect.value = initialTheme;
     themeSelect.addEventListener('change', (event) => {
