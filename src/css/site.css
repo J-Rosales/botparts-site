@@ -185,7 +185,7 @@ main {
 }
 
 .character-card {
-  background: var(--panel);
+  background: var(--panel-2);
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -230,6 +230,12 @@ main {
   gap: var(--card-content-gap);
 }
 
+.character-card .card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .character-card .card-image-row {
   margin: calc(-1 * var(--card-content-padding));
   margin-bottom: var(--card-content-gap);
@@ -260,6 +266,38 @@ main {
   color: var(--accent);
   padding: 4px 10px;
   border-radius: 999px;
+}
+
+.character-card .tag-overflow {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-variant-caps: all-small-caps;
+}
+
+.character-card .spoiler-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.character-card .spoiler-toggle {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.character-card .spoiler-toggle:hover {
+  color: var(--accent-hover);
 }
 
 .character-card .icon {
