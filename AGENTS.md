@@ -88,7 +88,7 @@ Before performing any task, **explicitly classify the request** as one of:
 - **MIXED TASK** (rare; must be justified)
 
 ### Mandatory behavior
-- If a task is not clearly labeled, **pause and ask for classification**.
+- If a task is not clearly labeled, **assume the task is a MIXED TASK**.
 - If a task is labeled **UX TASK**:
   - You may modify HTML structure and JS behavior.
   - You must not perform visual styling beyond minimal defaults needed for usability.
