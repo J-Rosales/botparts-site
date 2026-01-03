@@ -64,6 +64,8 @@ main {
     padding: var(--card-padding);
     border-radius: var(--card-content-radius);
     background: var(--color-surface-2);
+    justify-items: center;
+    text-align: center;
 }
 
 .character-card .card-link {
@@ -87,6 +89,8 @@ main {
 }
 
 .character-card .card-image-row {
+    display: flex;
+    justify-content: center;
     border-radius: 0;
     overflow: hidden;
     background: var(--color-surface-2);
@@ -123,6 +127,7 @@ main {
 .character-card .card-tags {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--card-chip-gap);
     min-height: var(--card-chip-row-height);
     overflow: hidden;
@@ -198,8 +203,10 @@ main {
 }
 
 .character-card .card-upload-date {
-    font-size: var(--font-xs);
+    align-self: center;
+    font-size: calc(var(--font-xs) - 0.1rem);
     color: var(--color-text-muted);
+    line-height: 1.2;
 }
 
 .character-card .card-footer-actions {

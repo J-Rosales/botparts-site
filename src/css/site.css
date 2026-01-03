@@ -230,6 +230,8 @@ main {
   padding: var(--card-content-padding);
   display: grid;
   gap: var(--card-content-gap);
+  justify-items: center;
+  text-align: center;
 }
 
 .character-card .card-title {
@@ -241,6 +243,9 @@ main {
 .character-card .card-image-row {
   margin: calc(-1 * var(--card-content-padding));
   margin-bottom: var(--card-content-gap);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .character-card .card-image-row .card-link {
@@ -258,6 +263,7 @@ main {
 .character-card .card-tags {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin-top: 0;
 }
@@ -312,6 +318,13 @@ main {
   justify-content: space-between;
   min-height: var(--card-footer-height);
   gap: var(--card-footer-gap);
+}
+
+.character-card .card-upload-date {
+  align-self: center;
+  font-size: calc(var(--font-xs) - 0.1rem);
+  color: var(--text-muted);
+  line-height: 1.2;
 }
 
 .character-card .card-footer-actions {
