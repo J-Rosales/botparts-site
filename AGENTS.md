@@ -75,6 +75,9 @@ Agents may generate:
 
 Tests must not modify files or assume network access.
 
+## Screenshots
+Do not take screenshots for tasks; the repo does not include Playwright or related tooling to support them.
+
 ## Mental model
 Think of this repo as a **static renderer and exporter**, not a build system.
 
