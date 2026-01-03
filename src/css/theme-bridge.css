@@ -15,10 +15,38 @@ nav.scrolled {
   box-shadow: var(--shadow);
 }
 
+.brand {
+  --brand-gradient: linear-gradient(135deg, var(--text), var(--accent));
+  --brand-gradient-size: calc(var(--brand-icon-size) + 10ch) 100%;
+  --brand-gradient-position: left center;
+}
+
 .brand-text {
-  background: linear-gradient(135deg, var(--text), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .brand-text {
+    background-image: var(--brand-gradient);
+    background-size: var(--brand-gradient-size);
+    background-position: var(--brand-gradient-position);
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@supports ((-webkit-mask: url("")) or (mask: url(""))) {
+  .brand-icon {
+    background-image: var(--brand-gradient);
+    background-size: var(--brand-gradient-size);
+    background-position: var(--brand-gradient-position);
+    background-repeat: no-repeat;
+    -webkit-mask: url("../assets/icons/logoIcon.svg") no-repeat center / contain;
+    mask: url("../assets/icons/logoIcon.svg") no-repeat center / contain;
+  }
 }
 
 a {

@@ -44,11 +44,12 @@ main {
   letter-spacing: 0.2em;
   text-decoration: none;
   text-transform: uppercase;
+  --brand-icon-size: 32px;
 }
 
 .brand-icon {
-  width: 32px;
-  height: 32px;
+  width: var(--brand-icon-size);
+  height: var(--brand-icon-size);
   background: url("../assets/icons/logoIcon.svg") no-repeat center;
   background-size: contain;
   flex-shrink: 0;
@@ -56,6 +57,8 @@ main {
 
 .brand-text {
   color: var(--text);
+  font-size: var(--brand-icon-size);
+  line-height: 1;
 }
 
 .navbar-links {
