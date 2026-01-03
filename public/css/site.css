@@ -13,7 +13,7 @@ main {
 .content-card {
     background: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
     border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: 4px;
     padding: var(--card-padding);
     color: var(--color-text-primary);
 }
@@ -31,9 +31,9 @@ main {
     display: flex;
     flex-direction: column;
     gap: var(--card-row-gap);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+    border: var(--border-width) solid var(--color-border);
     text-decoration: none;
     color: inherit;
     width: 100%;

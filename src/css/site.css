@@ -181,7 +181,7 @@ main {
 
 .character-card {
   background: var(--panel);
-  border-radius: 18px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
   width: 100%;
@@ -246,7 +246,7 @@ main {
 
 .content-page .content-card {
   background: var(--panel);
-  border-radius: 18px;
+  border-radius: 4px;
   padding: 28px;
   border: 1px solid var(--border);
 }
