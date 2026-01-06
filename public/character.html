@@ -1,81 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Detail | Botparts</title>
-    <link rel="stylesheet" href="css/design-tokens.css">
-    <link rel="stylesheet" href="templatemo-noir-fashion.css">
-    <link rel="stylesheet" href="css/site.css">
-<!-- 
-TemplateMo 599 Noir Fashion
-https://templatemo.com/tm-599-noir-fashion
--->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character | Bot Catalogue</title>
+  <script>
+    const storedTheme = localStorage.getItem('theme');
+    const defaultTheme = 'tomorrow';
+    const themes = ['tomorrow', 'photon', 'yotsuba', 'yotsuba-b', 'futaba', 'burichan'];
+    const resolvedTheme = themes.includes(storedTheme) ? storedTheme : defaultTheme;
+    document.documentElement.dataset.theme = resolvedTheme;
+  </script>
+  <link rel="stylesheet" href="css/templatemo-noir-fashion.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/theme-bridge.css">
 </head>
-<body>
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo-link">
-                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#fff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff3366;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <polygon points="50,10 20,50 50,90 80,50" fill="none" stroke="url(#logoGrad)" stroke-width="3"/>
-                    <circle cx="50" cy="50" r="5" fill="url(#logoGrad)"/>
-                </svg>
-                <span class="logo-text">Botparts</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="browse.html" class="nav-link">Browse</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="howto.html" class="nav-link">How To</a></li>
-                <li><a href="license.html" class="nav-link">License</a></li>
-                <li><a href="changelog.html" class="nav-link">Changelog</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<body data-base="" data-page-base="">
+  <nav id="navbar" class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-top">
+        <a class="brand" href="index.html" aria-label="Botparts home">
+          <span class="brand-icon" aria-hidden="true"></span>
+          <span class="brand-text">BOTPARTS</span>
+        </a>
 
-    <div class="mobile-nav" id="mobileNav">
-        <ul class="mobile-nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="browse.html">Browse</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="howto.html">How To</a></li>
-            <li><a href="license.html">License</a></li>
-            <li><a href="changelog.html">Changelog</a></li>
-        </ul>
+        <div class="nav-theme">
+          <label class="nav-theme-label" for="themeSelect">theme</label>
+          <select class="nav-theme-select" id="themeSelect" name="theme">
+            <option value="tomorrow">tomorrow</option>
+            <option value="photon">photon</option>
+            <option value="yotsuba">yotsuba</option>
+            <option value="yotsuba-b">yotsuba b</option>
+            <option value="futaba">futaba</option>
+            <option value="burichan">burichan</option>
+          </select>
+        </div>
+      </div>
+
+      <ul class="navbar-links" aria-label="Primary">
+        <li><a href="index.html" class="nav-link" data-nav-page="landing">Home</a></li>
+        <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
+        <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
+        <li><a href="about.html" class="nav-link" data-nav-page="about">About</a></li>
+        <li><a href="license.html" class="nav-link" data-nav-page="license">License</a></li>
+        <li><a href="changelog.html" class="nav-link" data-nav-page="changelog">Changelog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="character-detail">
+    <div class="detail-header">
+      <p><a href="browse.html">&larr; Back to Browse</a></p>
+      <h1 id="characterName">Loading...</h1>
+      <p id="characterDescription"></p>
+      <div class="detail-tags" id="characterTags"></div>
     </div>
 
-    <main>
-        <section class="page-hero">
-            <div class="section-header">
-                <h1 class="section-title" id="character-name">Character Detail</h1>
-                <p class="section-subtitle" id="character-tagline">Loading manifest data from the static catalogue.</p>
+    <div class="character-layout">
+      <section class="character-left">
+        <div class="character-media-card">
+          <div class="character-media" id="characterMedia">
+            <div class="character-media-placeholder" id="characterMediaPlaceholder">
+              <span>No preview image</span>
             </div>
-        </section>
+          </div>
+          <div class="provenance-chip">
+            <button class="chip-button" id="provenanceButton" type="button">Source + Rights</button>
+            <span class="chip-status" id="provenanceStatus">Redistribution: unknown</span>
+          </div>
+        </div>
 
-        <section class="page-section">
-            <div class="content-card" id="character-media">
-                <p class="status-message">No preview image available.</p>
-            </div>
-            <div class="content-card" id="character-detail">
-                <p class="status-message" id="character-status">Waiting for character data…</p>
-            </div>
-        </section>
-    </main>
+        <div class="detail-card">
+          <h2>Metadata</h2>
+          <dl class="meta-list" id="characterMeta"></dl>
+        </div>
 
-    <script src="js/icons.js" defer></script>
-    <script src="templatemo-noir-scripts.js" defer></script>
-    <script src="js/site.js" defer></script>
-    <script src="js/character.js" defer></script>
+        <div class="detail-card" id="characterChangelogCard">
+          <h2>Changelog</h2>
+          <ul class="changelog" id="characterChangelog"></ul>
+        </div>
+      </section>
+
+      <aside class="character-right">
+        <div class="config-panel">
+          <h2>Configure exports</h2>
+
+          <div class="config-section">
+            <h3>Content modules</h3>
+            <div id="moduleControls" class="module-controls"></div>
+          </div>
+
+          <div class="config-section">
+            <h3>Transform mode</h3>
+            <div id="transformControls" class="option-grid"></div>
+          </div>
+
+          <div class="config-section">
+            <h3>Output type</h3>
+            <div id="outputControls" class="option-grid"></div>
+          </div>
+
+          <div class="config-summary" id="configSummary"></div>
+
+          <div class="download-panel">
+            <button class="nav-cta" type="button" id="downloadPrimary">Download selection</button>
+            <button class="secondary-button" type="button" id="downloadAll">Download everything</button>
+            <p class="download-note">PNG downloads use the stored card image when available, otherwise a metadata placeholder.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <p class="notice hidden" id="characterError"></p>
+  </main>
+
+  <div class="modal hidden" id="provenanceModal" role="dialog" aria-modal="true" aria-labelledby="provenanceTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="provenanceTitle">Source &amp; Redistribution</h2>
+        <button class="modal-close" type="button" id="provenanceClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-content" id="provenanceDetails"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="js/icons.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/character.js" defer></script>
 </body>
 </html>

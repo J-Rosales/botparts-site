@@ -16,13 +16,13 @@ https://templatemo.com/tm-599-noir-fashion
 }
 
 :root {
-	--primary: var(--color-surface);
-	--accent: var(--color-accent);
-	--accent-hover: var(--color-accent-strong);
-	--text-light: var(--color-text-primary);
-	--text-muted: var(--color-text-muted);
-	--bg-dark: var(--color-bg);
-	--bg-section: var(--color-surface);
+	--primary: #0a0a0a;
+	--accent: #ff3366;
+	--accent-hover: #ff1149;
+	--text-light: #ffffff;
+	--text-muted: #999;
+	--bg-dark: #000;
+	--bg-section: #0a0a0a;
 }
 
 html {
@@ -46,14 +46,14 @@ nav {
 	width: 100%;
 	padding: 20px 50px;
 	z-index: 1000;
-	background: var(--color-surface-2);
+	background: var(--panel-2);
 	backdrop-filter: blur(10px);
 	transition: all 0.3s ease;
 }
 
 nav.scrolled {
 	padding: 15px 50px;
-	background: var(--color-surface-2);
+	background: var(--panel-2);
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -88,7 +88,7 @@ nav.scrolled {
 	font-size: 28px;
 	font-weight: 900;
 	letter-spacing: -2px;
-	background: linear-gradient(135deg, var(--color-text-primary), var(--accent));
+	background: linear-gradient(135deg, var(--text), var(--gradient-accent-1));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -100,21 +100,6 @@ nav.scrolled {
 	align-items: center;
 	justify-content: center;
 	margin: 0 auto;
-}
-
-@media (min-width: 901px) {
-	.nav-container {
-		position: relative;
-	}
-
-	.nav-links {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
-		margin: 0;
-		width: max-content;
-	}
 }
 
 .nav-links a {
@@ -144,7 +129,7 @@ nav.scrolled {
 }
 
 .nav-links a:hover {
-	color: var(--color-text-primary);
+	color: white;
 	opacity: 1;
 }
 
@@ -153,7 +138,7 @@ nav.scrolled {
 }
 
 .nav-links a.active {
-	color: var(--color-text-primary);
+	color: white;
 	opacity: 1;
 }
 
@@ -170,7 +155,7 @@ nav.scrolled {
 
 .nav-cta {
 	background: var(--accent);
-	color: var(--color-text-primary) !important;
+	color: white !important;
 	padding: 10px 25px !important;
 	border-radius: 25px;
 	font-weight: 600;
@@ -385,7 +370,7 @@ nav.scrolled {
 	height: 100vh;
 	position: relative;
 	overflow: hidden;
-	background: var(--color-bg);
+	background: #000;
 }
 
 .hero-bg {
@@ -403,7 +388,16 @@ nav.scrolled {
 	height: 150%;
 	top: -25%;
 	left: -25%;
-	background: conic-gradient(from 180deg at 50% 50%, var(--color-accent) 0deg, var(--color-bg) 60deg, var(--color-accent) 120deg, var(--color-bg) 180deg, var(--color-accent) 240deg, var(--color-bg) 300deg, var(--color-accent) 360deg);
+	background: conic-gradient(
+		from 180deg at 50% 50%,
+		var(--gradient-accent-1) 0deg,
+		var(--gradient-surface-2) 60deg,
+		var(--gradient-accent-1) 120deg,
+		var(--gradient-surface-2) 180deg,
+		var(--gradient-accent-1) 240deg,
+		var(--gradient-surface-2) 300deg,
+		var(--gradient-accent-1) 360deg
+	);
 	animation: spin 20s linear infinite;
 	opacity: 0.15;
 }
@@ -413,7 +407,7 @@ nav.scrolled {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+	background: radial-gradient(circle at center, transparent 0%, color-mix(in srgb, var(--bg) 80%, transparent) 100%);
 }
 
 @keyframes spin {
@@ -462,7 +456,7 @@ nav.scrolled {
 	position: absolute;
 	width: 30px;
 	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(255, 51, 102, 0.5), transparent);
+	background: linear-gradient(90deg, transparent, var(--gradient-accent-strong), transparent);
 	left: -30px;
 	animation: shimmer 3s ease infinite;
 }
@@ -508,7 +502,7 @@ nav.scrolled {
 }
 
 .hero-title .accent {
-	background: linear-gradient(90deg, var(--color-accent), #ff6690);
+	background: linear-gradient(90deg, var(--gradient-accent-1), var(--gradient-accent-2));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-style: italic;
@@ -593,7 +587,7 @@ nav.scrolled {
 
 .cta-button.primary {
 	background: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 }
 
 .cta-button.primary::before {
@@ -621,7 +615,7 @@ nav.scrolled {
 
 .cta-button.outline {
 	background: transparent;
-	color: var(--color-text-primary);
+	color: white;
 	border: 1px solid rgba(255, 255, 255, 0.3);
 	backdrop-filter: blur(10px);
 }
@@ -717,7 +711,7 @@ nav.scrolled {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+	background: linear-gradient(135deg, var(--gradient-surface-strong) 0%, transparent 50%, var(--gradient-surface-soft) 100%);
 	pointer-events: none;
 }
 
@@ -732,9 +726,9 @@ nav.scrolled {
 	position: absolute;
 	padding: 8px 16px;
 	background: rgba(0, 0, 0, 0.8);
-	border: 1px solid var(--color-border);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
-	color: var(--color-text-primary);
+	color: white;
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -834,7 +828,7 @@ nav.scrolled {
 
 /* Collections Grid */
 .collections {
-	padding: var(--space-6) 50px var(--space-10);
+	padding: 24px 50px 80px;
 	max-width: 1400px;
 	margin: 0 auto;
 	position: relative;
@@ -883,7 +877,7 @@ nav.scrolled {
 .tab-btn:hover {
 	background: var(--accent);
 	border-color: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 	transform: translateY(-2px);
 }
 
@@ -895,7 +889,7 @@ nav.scrolled {
 
 .collection-card {
 	position: relative;
-	background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface));
+	background: linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	overflow: hidden;
 	cursor: pointer;
 	transition: all 0.5s ease;
@@ -939,7 +933,7 @@ nav.scrolled {
 .collection-thumbnail {
 	width: 100%;
 	height: 300px;
-	background: linear-gradient(45deg, #2a2a2a, var(--color-surface-2));
+	background: linear-gradient(45deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -957,7 +951,7 @@ nav.scrolled {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(45deg, transparent 30%, rgba(255, 51, 102, 0.1) 50%, transparent 70%);
+	background: linear-gradient(45deg, transparent 30%, var(--gradient-accent-soft) 50%, transparent 70%);
 	transform: translateX(-100%);
 	transition: transform 0.8s ease;
 }
@@ -991,7 +985,7 @@ nav.scrolled {
 	display: inline-block;
 	padding: 4px 12px;
 	background: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 	font-size: 9px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -1101,7 +1095,7 @@ nav.scrolled {
 .highlight-icon {
 	width: 60px;
 	height: 60px;
-	background: linear-gradient(135deg, var(--accent), #ff6690);
+	background: linear-gradient(135deg, var(--gradient-accent-1), var(--gradient-accent-2));
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -1114,7 +1108,7 @@ nav.scrolled {
 	font-size: 18px;
 	font-weight: 600;
 	margin-bottom: 10px;
-	color: var(--color-text-primary);
+	color: white;
 }
 
 .highlight-desc {
@@ -1128,7 +1122,7 @@ nav.scrolled {
 	height: 500px;
 	border-radius: 12px;
 	overflow: hidden;
-	background: linear-gradient(135deg, #2a2a2a, var(--color-surface-2));
+	background: linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 }
 
 .featured-image-grid {
@@ -1140,7 +1134,7 @@ nav.scrolled {
 }
 
 .featured-img {
-	background: linear-gradient(45deg, #333, #222);
+	background: linear-gradient(45deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1168,7 +1162,7 @@ nav.scrolled {
 
 .featured-img:first-child {
 	grid-row: 1 / 3;
-	background: linear-gradient(135deg, #444, #222);
+	background: linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	font-size: 18px;
 }
 
@@ -1179,7 +1173,7 @@ nav.scrolled {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(45deg, transparent 30%, rgba(255, 51, 102, 0.1) 50%, transparent 70%);
+	background: linear-gradient(45deg, transparent 30%, var(--gradient-accent-soft) 50%, transparent 70%);
 	transform: translateX(-100%);
 	transition: transform 0.8s ease;
 }
@@ -1192,7 +1186,7 @@ nav.scrolled {
 	display: inline-block;
 	padding: 18px 50px;
 	background: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 	text-decoration: none;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -1261,12 +1255,12 @@ nav.scrolled {
 .author-avatar {
 	width: 50px;
 	height: 50px;
-	background: linear-gradient(135deg, var(--accent), #ff6690);
+	background: linear-gradient(135deg, var(--gradient-accent-1), var(--gradient-accent-2));
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--color-text-primary);
+	color: white;
 	font-weight: 600;
 	font-size: 18px;
 }
@@ -1274,7 +1268,7 @@ nav.scrolled {
 .author-info h4 {
 	font-size: 16px;
 	margin-bottom: 5px;
-	color: var(--color-text-primary);
+	color: white;
 }
 
 .author-info p {
@@ -1293,7 +1287,7 @@ nav.scrolled {
 /* Newsletter Section */
 .newsletter {
 	padding: 120px 50px 100px;
-	background: linear-gradient(135deg, var(--accent), #cc0044);
+	background: linear-gradient(135deg, var(--gradient-accent-1), var(--gradient-accent-2));
 	text-align: center;
 }
 
@@ -1325,24 +1319,24 @@ nav.scrolled {
 	padding: 18px 25px;
 	background: rgba(255, 255, 255, 0.1);
 	border: 2px solid rgba(255, 255, 255, 0.3);
-	color: var(--color-text-primary);
+	color: white;
 	font-size: 16px;
 	transition: all 0.3s ease;
 }
 
 .newsletter-input::placeholder {
-	color: var(--color-text-secondary);
+	color: rgba(255, 255, 255, 0.7);
 }
 
 .newsletter-input:focus {
 	outline: none;
 	background: rgba(255, 255, 255, 0.2);
-	border-color: var(--color-text-primary);
+	border-color: white;
 }
 
 .newsletter-btn {
 	padding: 18px 40px;
-	background: var(--color-text-primary);
+	background: white;
 	color: var(--accent);
 	border: none;
 	font-weight: 600;
@@ -1381,7 +1375,7 @@ nav.scrolled {
 }
 
 .contact-form-wrapper {
-	background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface));
+	background: linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	padding: 50px;
 	border-radius: 10px;
 	position: relative;
@@ -1419,8 +1413,8 @@ nav.scrolled {
 	width: 100%;
 	padding: 15px;
 	background: rgba(255, 255, 255, 0.05);
-	border: 1px solid var(--color-border);
-	color: var(--color-text-primary);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: white;
 	font-size: 16px;
 	transition: all 0.3s ease;
 	font-family: 'Arial', sans-serif;
@@ -1452,7 +1446,7 @@ nav.scrolled {
 
 .form-submit {
 	background: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 	padding: 18px 50px;
 	border: none;
 	font-size: 14px;
@@ -1491,7 +1485,7 @@ nav.scrolled {
 
 .contact-info {
 	padding: 50px;
-	background: linear-gradient(135deg, rgba(255, 51, 102, 0.08), rgba(255, 51, 102, 0.02));
+	background: linear-gradient(135deg, var(--gradient-accent-soft), var(--gradient-accent-faint));
 	border-radius: 10px;
 	border: 1px solid rgba(255, 51, 102, 0.1);
 }
@@ -1511,7 +1505,7 @@ nav.scrolled {
 .info-icon {
 	width: 60px;
 	height: 60px;
-	background: linear-gradient(135deg, var(--accent), #ff6690);
+	background: linear-gradient(135deg, var(--gradient-accent-1), var(--gradient-accent-2));
 	border-radius: 12px;
 	display: flex;
 	align-items: center;
@@ -1551,7 +1545,7 @@ nav.scrolled {
 .map-section {
 	position: relative;
 	height: 400px;
-	background: linear-gradient(135deg, var(--color-surface-2), #2a2a2a);
+	background: linear-gradient(135deg, var(--gradient-surface-1), var(--gradient-surface-2));
 	overflow: hidden;
 	margin-top: 60px;
 	border-radius: 8px;
@@ -1562,7 +1556,7 @@ nav.scrolled {
 	width: 100%;
 	height: 100%;
 	position: relative;
-	background: var(--color-surface-2);
+	background: #111;
 }
 
 .map-container iframe {
@@ -1582,7 +1576,7 @@ nav.scrolled {
 
 /* Footer */
 footer {
-	background: var(--color-bg);
+	background: #000;
 	padding: 80px 50px 30px;
 	border-top: 1px solid #222;
 }
@@ -1599,7 +1593,7 @@ footer {
 .footer-brand h3 {
 	font-size: 32px;
 	margin-bottom: 20px;
-	background: linear-gradient(135deg, var(--color-text-primary), var(--accent));
+	background: linear-gradient(135deg, var(--text), var(--gradient-accent-1));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -1631,7 +1625,7 @@ footer {
 .social-link:hover {
 	background: var(--accent);
 	border-color: var(--accent);
-	color: var(--color-text-primary);
+	color: white;
 	transform: translateY(-3px);
 }
 
@@ -1640,7 +1634,7 @@ footer {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	margin-bottom: 25px;
-	color: var(--color-text-primary);
+	color: white;
 }
 
 .footer-column ul {

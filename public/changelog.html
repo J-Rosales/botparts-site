@@ -1,81 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Changelog | Botparts</title>
-    <link rel="stylesheet" href="css/design-tokens.css">
-    <link rel="stylesheet" href="templatemo-noir-fashion.css">
-    <link rel="stylesheet" href="css/site.css">
-<!-- 
-TemplateMo 599 Noir Fashion
-https://templatemo.com/tm-599-noir-fashion
--->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog | Bot Catalogue</title>
+  <script>
+    const storedTheme = localStorage.getItem('theme');
+    const defaultTheme = 'tomorrow';
+    const themes = ['tomorrow', 'photon', 'yotsuba', 'yotsuba-b', 'futaba', 'burichan'];
+    const resolvedTheme = themes.includes(storedTheme) ? storedTheme : defaultTheme;
+    document.documentElement.dataset.theme = resolvedTheme;
+  </script>
+  <link rel="stylesheet" href="css/templatemo-noir-fashion.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/theme-bridge.css">
 </head>
-<body>
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo-link">
-                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#fff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff3366;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <polygon points="50,10 20,50 50,90 80,50" fill="none" stroke="url(#logoGrad)" stroke-width="3"/>
-                    <circle cx="50" cy="50" r="5" fill="url(#logoGrad)"/>
-                </svg>
-                <span class="logo-text">Botparts</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="browse.html" class="nav-link">Browse</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="howto.html" class="nav-link">How To</a></li>
-                <li><a href="license.html" class="nav-link">License</a></li>
-                <li><a href="changelog.html" class="nav-link">Changelog</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<body data-page="changelog" data-base="" data-page-base="">
+  <nav id="navbar" class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-top">
+        <a class="brand" href="index.html" aria-label="Botparts home">
+          <span class="brand-icon" aria-hidden="true"></span>
+          <span class="brand-text">BOTPARTS</span>
+        </a>
 
-    <div class="mobile-nav" id="mobileNav">
-        <ul class="mobile-nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="browse.html">Browse</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="howto.html">How To</a></li>
-            <li><a href="license.html">License</a></li>
-            <li><a href="changelog.html">Changelog</a></li>
-        </ul>
+        <div class="nav-theme">
+          <label class="nav-theme-label" for="themeSelect">theme</label>
+          <select class="nav-theme-select" id="themeSelect" name="theme">
+            <option value="tomorrow">tomorrow</option>
+            <option value="photon">photon</option>
+            <option value="yotsuba">yotsuba</option>
+            <option value="yotsuba-b">yotsuba b</option>
+            <option value="futaba">futaba</option>
+            <option value="burichan">burichan</option>
+          </select>
+        </div>
+      </div>
+
+      <ul class="navbar-links" aria-label="Primary">
+        <li><a href="index.html" class="nav-link" data-nav-page="landing">Home</a></li>
+        <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
+        <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
+        <li><a href="about.html" class="nav-link" data-nav-page="about">About</a></li>
+        <li><a href="license.html" class="nav-link" data-nav-page="license">License</a></li>
+        <li><a href="changelog.html" class="nav-link" data-nav-page="changelog">Changelog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="content-page">
+    <div>
+      <h1>Changelog</h1>
+      <p>Track catalogue UI updates and release milestones here.</p>
     </div>
 
-    <main>
-        <section class="page-hero">
-            <div class="section-header">
-                <h1 class="section-title">Changelog</h1>
-                <p class="section-subtitle">Track catalogue updates and release milestones.</p>
-            </div>
-        </section>
+    <div class="content-card">
+      <h2>2025-01-01</h2>
+      <ul>
+        <li>Initial static catalogue layout and navigation.</li>
+        <li>Added browse, character detail, and download flows.</li>
+      </ul>
+    </div>
+  </main>
 
-        <section class="page-section">
-            <div class="content-card">
-                <h2>2025-01-01</h2>
-                <ul>
-                    <li>Initial static catalogue navigation and landing layout.</li>
-                    <li>Added browse, detail, and download foundations.</li>
-                </ul>
-            </div>
-        </section>
-    </main>
-
-    <script src="js/icons.js" defer></script>
-    <script src="templatemo-noir-scripts.js" defer></script>
-    <script src="js/site.js" defer></script>
+  <script src="js/icons.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
 </body>
 </html>

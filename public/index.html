@@ -1,74 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botparts Catalogue</title>
-    <link rel="stylesheet" href="css/design-tokens.css">
-    <link rel="stylesheet" href="templatemo-noir-fashion.css">
-    <link rel="stylesheet" href="css/site.css">
-<!-- 
-TemplateMo 599 Noir Fashion
-https://templatemo.com/tm-599-noir-fashion
--->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot Catalogue</title>
+  <script>
+    const storedTheme = localStorage.getItem('theme');
+    const defaultTheme = 'tomorrow';
+    const themes = ['tomorrow', 'photon', 'yotsuba', 'yotsuba-b', 'futaba', 'burichan'];
+    const resolvedTheme = themes.includes(storedTheme) ? storedTheme : defaultTheme;
+    document.documentElement.dataset.theme = resolvedTheme;
+  </script>
+  <link rel="stylesheet" href="css/templatemo-noir-fashion.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/theme-bridge.css">
 </head>
-<body>
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo-link">
-                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#fff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#ff3366;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <polygon points="50,10 20,50 50,90 80,50" fill="none" stroke="url(#logoGrad)" stroke-width="3"/>
-                    <circle cx="50" cy="50" r="5" fill="url(#logoGrad)"/>
-                </svg>
-                <span class="logo-text">Botparts</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="browse.html" class="nav-link">Browse</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="howto.html" class="nav-link">How To</a></li>
-                <li><a href="license.html" class="nav-link">License</a></li>
-                <li><a href="changelog.html" class="nav-link">Changelog</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<body data-page="landing" data-base="" data-page-base="">
+  <nav id="navbar" class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-top">
+        <a class="brand" href="index.html" aria-label="Botparts home">
+          <span class="brand-icon" aria-hidden="true"></span>
+          <span class="brand-text">BOTPARTS</span>
+        </a>
 
-    <div class="mobile-nav" id="mobileNav">
-        <ul class="mobile-nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="browse.html">Browse</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="howto.html">How To</a></li>
-            <li><a href="license.html">License</a></li>
-            <li><a href="changelog.html">Changelog</a></li>
-        </ul>
+        <div class="nav-theme">
+          <label class="nav-theme-label" for="themeSelect">theme</label>
+          <select class="nav-theme-select" id="themeSelect" name="theme">
+            <option value="tomorrow">tomorrow</option>
+            <option value="photon">photon</option>
+            <option value="yotsuba">yotsuba</option>
+            <option value="yotsuba-b">yotsuba b</option>
+            <option value="futaba">futaba</option>
+            <option value="burichan">burichan</option>
+          </select>
+        </div>
+      </div>
+
+      <ul class="navbar-links" aria-label="Primary">
+        <li><a href="index.html" class="nav-link" data-nav-page="landing">Home</a></li>
+        <li><a href="browse.html" class="nav-link" data-nav-page="browse">Browse</a></li>
+        <li><a href="how-to.html" class="nav-link" data-nav-page="howto">How To</a></li>
+        <li><a href="about.html" class="nav-link" data-nav-page="about">About</a></li>
+        <li><a href="license.html" class="nav-link" data-nav-page="license">License</a></li>
+        <li><a href="changelog.html" class="nav-link" data-nav-page="changelog">Changelog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="collections" id="featured">
+    <div class="section-header">
+      <h2 class="section-title">Featured Characters</h2>
+      <p class="section-subtitle">Hand-picked profiles to get started quickly.</p>
     </div>
 
-    <main>
-        <section class="collections" id="featured">
-            <div class="section-header">
-                <h2 class="section-title">Featured Characters</h2>
-                <p class="section-subtitle">Hand-picked profiles to get started quickly.</p>
-            </div>
-            <div id="featured-list" class="character-grid"></div>
-            <p id="featured-status" class="status-message"></p>
-        </section>
-    </main>
+    <div class="character-grid" id="featuredGrid"></div>
+    <p class="notice hidden" id="featuredEmpty">No featured characters have been added yet.</p>
+  </section>
 
-    <script src="js/icons.js" defer></script>
-    <script src="templatemo-noir-scripts.js" defer></script>
-    <script src="js/site.js" defer></script>
-    <script src="js/index.js" defer></script>
+  <section class="testimonials">
+    <div class="testimonials-header">
+      <h3>Plan your perfect bot</h3>
+      <p class="section-subtitle">Build with transparency, modular content, and clear attribution.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-rating">✔</div>
+        <div class="testimonial-quote">
+          Keep every character grounded in its original source and licensing status.
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">1</div>
+          <div class="author-info">
+            <h4>Verify provenance</h4>
+            <p>Respect creators and communities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-rating">✔</div>
+        <div class="testimonial-quote">
+          Swap modules and transforms to build the right export for your session.
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">2</div>
+          <div class="author-info">
+            <h4>Compose variations</h4>
+            <p>Toggle tone, lore, and constraints.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-rating">✔</div>
+        <div class="testimonial-quote">
+          Download individual exports or collect everything in one bundle.
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">3</div>
+          <div class="author-info">
+            <h4>Export confidently</h4>
+            <p>JSON, prompt packs, and PNG cards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Browse, build, and download with confidence — all from a static catalogue.
+  </div>
+
+  <script src="js/icons.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/landing.js" defer></script>
 </body>
 </html>
