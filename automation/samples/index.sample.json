@@ -1,0 +1,24 @@
+{
+  "siteTitle": "Botparts Sample Catalogue",
+  "siteDescription": "Sample catalogue export for validation.",
+  "generatedAt": "2025-01-01T00:00:00Z",
+  "entries": [
+    {
+      "slug": "sample-bot",
+      "name": "Sample Bot",
+      "description": "Sample entry for schema validation.",
+      "tags": ["sample", "guide"],
+      "featured": true,
+      "dataPath": "data/characters/sample-bot/manifest.json",
+      "redistributeAllowed": "unknown",
+      "provenance": {
+        "original": {
+          "url": "https://example.com/botparts/sample-bot",
+          "label": "Example source"
+        }
+      },
+      "updatedAt": "2025-01-01T00:00:00Z",
+      "version": "1.0.0"
+    }
+  ]
+}

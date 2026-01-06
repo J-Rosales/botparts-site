@@ -1,0 +1,58 @@
+{
+  "slug": "sample-bot",
+  "name": "Sample Bot",
+  "description": "Sample manifest for schema validation.",
+  "tags": ["sample", "guide"],
+  "redistributeAllowed": "unknown",
+  "provenance": {
+    "original": {
+      "url": "https://example.com/botparts/sample-bot",
+      "label": "Example source"
+    }
+  },
+  "base": {
+    "fragments": {
+      "persona": "fragments/persona.txt",
+      "scenario": "fragments/scenario.txt",
+      "system_prompt": "fragments/system_prompt.txt",
+      "greetings": "fragments/greetings.json",
+      "examples": "fragments/examples.txt"
+    }
+  },
+  "modules": [
+    {
+      "id": "base_persona",
+      "label": "Base persona",
+      "kind": "required",
+      "target": "persona",
+      "op": "replace",
+      "valuePath": "fragments/persona.txt"
+    },
+    {
+      "id": "alt_greetings",
+      "label": "Alternate greetings",
+      "kind": "toggle",
+      "target": "greetings",
+      "op": "replaceSet",
+      "valuePath": "fragments/greetings.json",
+      "defaultEnabled": true
+    }
+  ],
+  "transforms": [
+    {
+      "id": "natural",
+      "label": "Natural language",
+      "renderer": "text_pack"
+    },
+    {
+      "id": "schema",
+      "label": "Schema",
+      "renderer": "spec_v2_json"
+    }
+  ],
+  "defaults": {
+    "selectedModules": ["base_persona", "alt_greetings"],
+    "transformId": "natural",
+    "outputSet": ["spec_v2_json", "png_card"]
+  }
+}
