@@ -1,5 +1,5 @@
 import { downloadCharacterBundle, downloadSelection } from './downloads.js';
-import { fetchCharacterData } from './site-data.js';
+import { fetchCharacterData, getBasePath, withDevCacheBust } from './site-data.js';
 
 const nameEl = document.getElementById('characterName');
 const descriptionEl = document.getElementById('characterDescription');
@@ -10,6 +10,8 @@ const provenanceButton = document.getElementById('provenanceButton');
 const provenanceModal = document.getElementById('provenanceModal');
 const provenanceClose = document.getElementById('provenanceClose');
 const provenanceDetails = document.getElementById('provenanceDetails');
+const characterMedia = document.getElementById('characterMedia');
+const characterMediaPlaceholder = document.getElementById('characterMediaPlaceholder');
 const metaEl = document.getElementById('characterMeta');
 const changelogEl = document.getElementById('characterChangelog');
 const changelogCard = document.getElementById('characterChangelogCard');
@@ -53,6 +55,48 @@ function buildMetaRow(label, value) {
   wrapper.appendChild(dt);
   wrapper.appendChild(dd);
   metaEl.appendChild(wrapper);
+}
+
+function resolveAssetUrl(path) {
+  if (!path) return null;
+  if (/^https?:\/\//i.test(path)) return path;
+  const base = getBasePath();
+  const normalized = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${normalized}`;
+}
+
+function resolveCharacterImage(data) {
+  const candidate =
+    data?.cardImage ||
+    data?.image ||
+    data?.media?.cardPng ||
+    data?.media?.card ||
+    data?.assets?.cardPng ||
+    null;
+  return resolveAssetUrl(candidate);
+}
+
+function resolveSourceSite(url) {
+  if (!url) return 'unknown source';
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch (error) {
+    return url;
+  }
+}
+
+function buildAttributionSentence(data) {
+  const author =
+    data?.author?.name ||
+    data?.creator ||
+    data?.provenance?.original?.label ||
+    'unknown author';
+  const sourceUrl =
+    data?.provenance?.original?.url ||
+    data?.source?.url ||
+    '';
+  const sourceSite = resolveSourceSite(sourceUrl);
+  return `rewriten or inspired by ${author} (${sourceSite})`;
 }
 
 function buildOptionCard({ id, label, name, checked }) {
@@ -129,8 +173,10 @@ function renderProvenanceModal(data) {
   const backup = data.provenance?.backup;
   const redistribute = data.redistributeAllowed || 'unknown';
   const notes = data.provenance?.notes;
+  const attribution = buildAttributionSentence(data);
 
   const rows = [];
+  rows.push(`<p><strong>Attribution:</strong> ${attribution}</p>`);
   if (original?.url) {
     rows.push(`<p><strong>Original source:</strong> <a href="${original.url}" target="_blank" rel="noreferrer">${original.label || original.url}</a></p>`);
   }
@@ -280,8 +326,24 @@ async function loadCharacter() {
       buildMetaRow('Slug', data.slug);
       buildMetaRow('Character type', data.type || 'Character');
       buildMetaRow('Last update', data.updated || 'Pending');
+      buildMetaRow('Attribution', buildAttributionSentence(data));
       const sourceLabel = data.provenance?.original?.label || data.source?.label || 'Original source';
       buildMetaRow('Primary source', sourceLabel);
+    }
+
+    if (characterMedia) {
+      const imageUrl = resolveCharacterImage(data);
+      if (imageUrl) {
+        const img = document.createElement('img');
+        img.src = withDevCacheBust(imageUrl);
+        img.alt = data.name ? `${data.name} preview` : 'Character preview';
+        img.loading = 'lazy';
+        characterMedia.innerHTML = '';
+        characterMedia.appendChild(img);
+        characterMediaPlaceholder?.classList.add('hidden');
+      } else {
+        characterMediaPlaceholder?.classList.remove('hidden');
+      }
     }
 
     if (changelogEl && changelogCard) {

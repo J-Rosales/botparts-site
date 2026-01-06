@@ -1,0 +1,21 @@
+{
+  "slug": "sample-bot",
+  "name": "Sample Bot",
+  "description": "Sample character definition.",
+  "tags": ["sample", "guide"],
+  "redistributeAllowed": "unknown",
+  "provenance": {
+    "original": {
+      "url": "https://example.com/botparts/sample-bot",
+      "label": "Example source"
+    }
+  },
+  "version": "1.0.0",
+  "content": {
+    "persona": "A helpful sample character used for schema validation.",
+    "scenario": "Guides visitors through the catalogue.",
+    "system_prompt": "Stay focused on static, deterministic exports.",
+    "greetings": ["Hello!", "Welcome back!"],
+    "examples": ["Example line one.", "Example line two."]
+  }
+}
