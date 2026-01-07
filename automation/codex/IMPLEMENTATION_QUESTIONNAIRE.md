@@ -90,7 +90,7 @@ The user starts in a landing page with the other links at the top, based on the 
 ## DIRECTIVE03 — Character Page UI, Toggles, Metadata
 1. **Minimum module types (launch scope)**
    - **Q:** Which module types must exist at launch (e.g., base persona, lore pack, constraints pack, example dialogue pack)?
-     **A:** Base Persona, First Message, Alternate Greetings, Post History Instructions and System Prompt come in the same bundle, to create variants in the knowledge and personality of the character at the start. Each of these elements is associated with a field in the spec_v2 of the character.The `Post History Instructions and System Prompt` module is seldom used.
+     **A:** Base Persona, First Message, Alternate Greetings, Post History Instructions and System Prompt come in the same bundle, to create variants in the knowledge and personality of the character at the start. Each of these elements is associated with a field in the spec_v2 of the character. The `Post History Instructions and System Prompt` module can contain machine-generated idiosyncrasy content and should be preserved even when non-empty.
 
 2. **Toggle grouping behavior**
    - **Q:** Should we support **multi-select**, **single-select**, or **both**?

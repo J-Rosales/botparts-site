@@ -16,7 +16,7 @@ Implement the character entry “store-like” view:
 ## Implementation clarifications
 1. Minimum module types at launch:
    - Base Persona, First Message, Alternate Greetings, Post History Instructions, and System Prompt.
-   - Post History Instructions and System Prompt are seldom used.
+   - Post History Instructions and System Prompt can include machine-generated idiosyncrasy content and must be displayed/preserved when present.
    - Each element maps to a spec_v2 field for the character.
 2. Toggle grouping behavior:
    - Support both multi-select and single-select; all options within the same category are mutually exclusive.
@@ -32,6 +32,9 @@ Implement the character entry “store-like” view:
    - Two-column layout: left shows a larger image preserving aspect ratio; right contains foldable controls.
    - Toggles live in foldout sections with uneditable previews; include small “?” tooltip buttons for explanations.
    - Download options sit at the bottom of the right column.
+6. Character book display:
+   - Show character book entries for each variant when available.
+   - Variants may define their own embedded entries; prefer variant-local entries and fall back to canonical entries when absent.
 
 ## Tasks
 - Build the layout skeleton and responsive behavior.

@@ -16,7 +16,7 @@ Specify the JSON data format for:
  - Each character is a self-contained data package:
    - base definition
    - manifest describing toggles + assembly rules
-   - fragment files (system prompt variants, greetings, lore blocks, etc.)
+   - fragment files (system prompt variants, post-history instructions, greetings, lore blocks, etc.)
 
 ## Implementation clarifications
 1. Minimum metadata required per character:
@@ -31,6 +31,9 @@ Specify the JSON data format for:
 5. Modules vs transforms:
    - Modules are the **content selection** mechanism driven by toggles.
    - Transforms are **format-only renderings** for model preferences.
+6. Character book entries:
+   - `character_book` may include embedded entries that are variant-specific.
+   - Variant cards should prefer embedded entries defined on the variant and fall back to canonical entries when no variant-local entries exist.
 
 ## Tasks
 - Draft JSON Schemas:
