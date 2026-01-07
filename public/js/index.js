@@ -84,12 +84,8 @@ const loadIndex = async () => {
             }
             return;
         }
-        const response = await fetch('data/index.json');
-        if (!response.ok) {
-            throw new Error('Failed to load index.json');
-        }
-        const data = await response.json();
-        const entries = Array.isArray(data.entries) ? data.entries : [];
+        const { fetchCatalogueEntries } = await import('./site-data.js');
+        const entries = await fetchCatalogueEntries();
 
         if (!entries.length) {
             featuredStatus.textContent = 'No featured bots are available yet.';

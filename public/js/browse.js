@@ -1,6 +1,11 @@
 (async () => {
   const { downloadSiteBundle } = await import('./downloads.js');
-  const { buildCharacterCard, fetchCharacterData, fetchIndexData } = await import('./site-data.js');
+  const {
+    buildCharacterCard,
+    fetchCatalogueEntries,
+    fetchCharacterSpec,
+    getProseVariants
+  } = await import('./site-data.js');
 
   console.debug('[CARD-WIRING] browse.js loaded');
 
@@ -55,6 +60,8 @@
       data?.tokenCount,
       data?.stats?.tokenCount,
       data?.metrics?.tokenCount,
+      data?.data?.extensions?.token_count,
+      data?.data?.extensions?.tokenCount,
       data?.card?.extensions?.token_count,
       data?.card?.data?.extensions?.token_count,
       data?.baseCard?.extensions?.token_count,
@@ -68,6 +75,7 @@
     const candidates = [
       data?.alternateGreetings,
       data?.content?.alternateGreetings,
+      data?.data?.alternate_greetings,
       data?.card?.data?.alternate_greetings,
       data?.baseCard?.data?.alternate_greetings,
     ];
@@ -295,9 +303,11 @@
       uploadDate: parseDateValue(entry),
     };
     try {
-      const character = await fetchCharacterData(entry.slug);
-      stats.tokenCount = extractTokenCount(character);
-      stats.altGreetings = extractAltGreetingsCount(character);
+      const proseVariants = entry.proseVariants || getProseVariants(entry.manifest);
+      const primaryVariant = proseVariants[0] || 'schema-like';
+      const spec = await fetchCharacterSpec(entry.slug, primaryVariant);
+      stats.tokenCount = extractTokenCount(spec);
+      stats.altGreetings = extractAltGreetingsCount(spec);
     } catch (error) {
       stats.tokenCount = entry.tokenCount ?? 0;
       stats.altGreetings = entry.altGreetings ?? 0;
@@ -314,15 +324,14 @@
     }
 
     try {
-      const data = await fetchIndexData();
-      const rawEntries = data.entries || [];
+    const rawEntries = await fetchCatalogueEntries();
 
-      if (!rawEntries.length) {
-        browseEmpty?.classList.remove('hidden');
-        return;
-      }
+    if (!rawEntries.length) {
+      browseEmpty?.classList.remove('hidden');
+      return;
+    }
 
-      entries = await Promise.all(rawEntries.map((entry) => hydrateEntryStats(entry)));
+    entries = await Promise.all(rawEntries.map((entry) => hydrateEntryStats(entry)));
 
       const tagMap = new Map();
       entries.forEach((entry) => {

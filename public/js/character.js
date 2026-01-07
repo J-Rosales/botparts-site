@@ -1,6 +1,12 @@
 (async () => {
   const { downloadCharacterBundle, downloadSelection } = await import('./downloads.js');
-  const { fetchCharacterData, getBasePath, withDevCacheBust } = await import('./site-data.js');
+  const {
+    fetchCharacterManifest,
+    getBasePath,
+    getCharacterPngPath,
+    getProseVariants,
+    withDevCacheBust
+  } = await import('./site-data.js');
 
   const nameEl = document.getElementById('characterName');
   const descriptionEl = document.getElementById('characterDescription');
@@ -16,16 +22,14 @@
   const metaEl = document.getElementById('characterMeta');
   const changelogEl = document.getElementById('characterChangelog');
   const changelogCard = document.getElementById('characterChangelogCard');
-  const moduleControls = document.getElementById('moduleControls');
-  const transformControls = document.getElementById('transformControls');
+  const proseControls = document.getElementById('proseControls');
   const outputControls = document.getElementById('outputControls');
   const configSummary = document.getElementById('configSummary');
   const downloadPrimaryButton = document.getElementById('downloadPrimary');
   const downloadAllButton = document.getElementById('downloadAll');
 
   const outputOptions = [
-    { id: 'json', label: 'SillyTavern JSON' },
-    { id: 'text', label: 'Prompt pack (text)' },
+    { id: 'json', label: 'Spec v2 JSON' },
     { id: 'png', label: 'PNG card' }
   ];
 
@@ -34,16 +38,6 @@
       errorEl.textContent = message;
       errorEl.classList.remove('hidden');
     }
-  }
-
-  function normalizeText(value) {
-    if (Array.isArray(value)) {
-      return value.filter(Boolean).join('\n\n');
-    }
-    if (value == null) {
-      return '';
-    }
-    return String(value);
   }
 
   function buildMetaRow(label, value) {
@@ -66,7 +60,7 @@
     return `${base}${normalized}`;
   }
 
-  function resolveCharacterImage(data) {
+  function resolveCharacterImage(data, slug) {
     const candidate =
       data?.cardImage ||
       data?.image ||
@@ -74,7 +68,13 @@
       data?.media?.card ||
       data?.assets?.cardPng ||
       null;
-    return resolveAssetUrl(candidate);
+    if (candidate) {
+      return resolveAssetUrl(candidate);
+    }
+    if (slug) {
+      return resolveAssetUrl(getCharacterPngPath(slug));
+    }
+    return null;
   }
 
   function resolveSourceSite(url) {
@@ -91,6 +91,7 @@
       data?.author?.name ||
       data?.creator ||
       data?.provenance?.original?.label ||
+      data?.source?.label ||
       'unknown author';
     const sourceUrl =
       data?.provenance?.original?.url ||
@@ -118,15 +119,10 @@
 
   function updateUrl(state) {
     const params = new URLSearchParams(window.location.search);
-    if (state.modules.size) {
-      params.set('modules', Array.from(state.modules).join(','));
+    if (state.variant) {
+      params.set('variant', state.variant);
     } else {
-      params.delete('modules');
-    }
-    if (state.transform) {
-      params.set('transform', state.transform);
-    } else {
-      params.delete('transform');
+      params.delete('variant');
     }
     if (state.output) {
       params.set('output', state.output);
@@ -137,22 +133,15 @@
     window.history.replaceState({}, '', newUrl);
   }
 
-  function renderSummary(state, modules, transforms) {
+  function renderSummary(state, variants) {
     if (!configSummary) return;
-    const selectedModules = modules.filter((module) => state.modules.has(module.id));
-    const transform = transforms.find((item) => item.id === state.transform);
+    const variant = variants.find((item) => item.id === state.variant);
     const output = outputOptions.find((item) => item.id === state.output);
 
     configSummary.innerHTML = `
       <h3>Current configuration</h3>
-      <p><strong>Transform:</strong> ${transform ? transform.label : 'None selected'}</p>
+      <p><strong>Prose variant:</strong> ${variant ? variant.label : 'None selected'}</p>
       <p><strong>Output:</strong> ${output ? output.label : 'None selected'}</p>
-      <div>
-        <strong>Modules:</strong>
-        <ul>
-          ${selectedModules.map((module) => `<li>${module.label}</li>`).join('')}
-        </ul>
-      </div>
     `;
   }
 
@@ -216,78 +205,14 @@
     });
   }
 
-  function buildModulePreview(module, content) {
-    const previewText = module.preview ?? content?.[module.contentKey];
-    return normalizeText(previewText) || 'No preview available for this module.';
-  }
-
-  function deriveDefaults(modules) {
-    const defaults = new Set();
-    const groupDefaults = new Map();
-
-    modules.forEach((module) => {
-      if (module.type === 'required' || module.defaultEnabled) {
-        defaults.add(module.id);
-      }
-      if (module.group && module.type === 'oneOf' && module.defaultEnabled) {
-        groupDefaults.set(module.group, module.id);
-      }
-    });
-
-    modules.forEach((module) => {
-      if (module.group && module.type === 'oneOf' && !groupDefaults.has(module.group)) {
-        groupDefaults.set(module.group, module.id);
-      }
-    });
-
-    groupDefaults.forEach((moduleId) => defaults.add(moduleId));
-    return defaults;
-  }
-
-  function parseModuleParams(modules) {
-    const params = new URLSearchParams(window.location.search);
-    const raw = params.get('modules');
-    if (!raw) return null;
-    const requested = new Set(raw.split(',').map((item) => item.trim()).filter(Boolean));
-    const validIds = new Set(modules.map((module) => module.id));
-    const selected = new Set();
-    requested.forEach((id) => {
-      if (validIds.has(id)) selected.add(id);
-    });
-    return selected.size ? selected : null;
-  }
-
-  function buildModuleGroups(modules) {
-    const groups = new Map();
-    modules.forEach((module) => {
-      const key = module.group || module.id;
-      if (!groups.has(key)) {
-        groups.set(key, {
-          id: key,
-          label: module.groupLabel || module.group || module.label,
-          selectionType: module.type === 'oneOf' || module.group ? 'single' : 'multi',
-          modules: []
-        });
-      }
-      const group = groups.get(key);
-      if (module.type === 'oneOf') {
-        group.selectionType = 'single';
-      }
-      group.modules.push(module);
-    });
-    return Array.from(groups.values());
-  }
-
-  function enforceGroupSelection(state, groups) {
-    groups.forEach((group) => {
-      if (group.selectionType !== 'single') return;
-      const selected = group.modules.filter((module) => state.modules.has(module.id));
-      if (!selected.length) {
-        state.modules.add(group.modules[0].id);
-        return;
-      }
-      selected.slice(1).forEach((module) => state.modules.delete(module.id));
-    });
+  function formatVariantLabel(variant) {
+    if (variant === 'schema-like') {
+      return 'Schema-like prose';
+    }
+    if (variant === 'hybrid') {
+      return 'Hybrid prose';
+    }
+    return variant;
   }
 
   async function loadCharacter() {
@@ -300,14 +225,32 @@
     }
 
     try {
-      const data = await fetchCharacterData(slug);
-      document.title = `${data.name} | Bot Catalogue`;
-      if (nameEl) nameEl.textContent = data.name;
-      if (descriptionEl) descriptionEl.textContent = data.description || 'Description coming soon.';
+      const manifest = await fetchCharacterManifest(slug);
+      const site = manifest?.site || manifest?.catalogue || manifest?.catalog || manifest?.x?.site || {};
+      const name = site.name || manifest?.name || slug;
+      const description = site.description || manifest?.description || 'Description coming soon.';
+      const tags = site.tags || manifest?.tags || [];
+      const proseVariants = getProseVariants(manifest);
+      const variants = proseVariants.map((variant) => ({
+        id: variant,
+        label: formatVariantLabel(variant)
+      }));
+      const requestedVariant = params.get('variant');
+      const resolvedVariant = variants.find((variant) => variant.id === requestedVariant)?.id
+        || variants[0]?.id
+        || null;
+      const state = {
+        variant: resolvedVariant,
+        output: params.get('output') || outputOptions[0].id
+      };
+
+      document.title = `${name} | Bot Catalogue`;
+      if (nameEl) nameEl.textContent = name;
+      if (descriptionEl) descriptionEl.textContent = description;
 
       if (tagsEl) {
         tagsEl.innerHTML = '';
-        (data.tags || []).forEach((tag) => {
+        tags.forEach((tag) => {
           const span = document.createElement('span');
           span.className = 'tag-pill';
           span.textContent = tag;
@@ -316,28 +259,28 @@
       }
 
       if (provenanceStatusEl) {
-        const status = data.redistributeAllowed || 'unknown';
+        const status = manifest?.redistributeAllowed || site.redistributeAllowed || 'unknown';
         provenanceStatusEl.textContent = `Redistribution: ${status}`;
       }
-      renderProvenanceModal(data);
+      renderProvenanceModal(manifest);
       setupModal();
 
       if (metaEl) {
         metaEl.innerHTML = '';
-        buildMetaRow('Slug', data.slug);
-        buildMetaRow('Character type', data.type || 'Character');
-        buildMetaRow('Last update', data.updated || 'Pending');
-        buildMetaRow('Attribution', buildAttributionSentence(data));
-        const sourceLabel = data.provenance?.original?.label || data.source?.label || 'Original source';
+        buildMetaRow('Slug', manifest.slug || slug);
+        buildMetaRow('Character type', manifest.type || site.type || 'Character');
+        buildMetaRow('Last update', site.updatedAt || manifest.updatedAt || manifest.uploadDate || 'Pending');
+        buildMetaRow('Attribution', buildAttributionSentence(manifest));
+        const sourceLabel = manifest.provenance?.original?.label || manifest.source?.label || 'Original source';
         buildMetaRow('Primary source', sourceLabel);
       }
 
       if (characterMedia) {
-        const imageUrl = resolveCharacterImage(data);
+        const imageUrl = resolveCharacterImage(manifest, slug);
         if (imageUrl) {
           const img = document.createElement('img');
           img.src = withDevCacheBust(imageUrl);
-          img.alt = data.name ? `${data.name} preview` : 'Character preview';
+          img.alt = name ? `${name} preview` : 'Character preview';
           img.loading = 'lazy';
           characterMedia.innerHTML = '';
           characterMedia.appendChild(img);
@@ -348,7 +291,7 @@
       }
 
       if (changelogEl && changelogCard) {
-        const history = data.versions || [];
+        const history = manifest.versions || site.versions || [];
         changelogEl.innerHTML = '';
         if (history.length) {
           history.forEach((entry) => {
@@ -361,94 +304,21 @@
         }
       }
 
-      const modules = data.modules || [];
-      const transforms = data.transforms || [];
-      const defaults = deriveDefaults(modules);
-      const paramModules = parseModuleParams(modules);
-      const state = {
-        modules: paramModules || defaults,
-        transform: params.get('transform') || transforms[0]?.id || null,
-        output: params.get('output') || outputOptions[0].id
-      };
-
-      const groups = buildModuleGroups(modules);
-      enforceGroupSelection(state, groups);
-      if (moduleControls) {
-        moduleControls.innerHTML = '';
-        groups.forEach((group) => {
-          const groupWrapper = document.createElement('div');
-          groupWrapper.className = 'config-group';
-          if (group.modules.length > 1) {
-            const title = document.createElement('div');
-            title.className = 'config-group-title';
-            title.textContent = group.label;
-            groupWrapper.appendChild(title);
-          }
-          group.modules.forEach((module) => {
-            const details = document.createElement('details');
-            details.className = 'module-item';
-            details.open = module.defaultOpen || false;
-            const summary = document.createElement('summary');
-            summary.className = 'module-summary';
-            const input = document.createElement('input');
-            const groupName = `module-${group.id}`;
-            input.type = group.selectionType === 'single' ? 'radio' : 'checkbox';
-            input.name = groupName;
-            input.id = `module-${module.id}`;
-            input.checked = state.modules.has(module.id);
-            input.disabled = module.type === 'required';
-            const label = document.createElement('label');
-            label.htmlFor = input.id;
-            label.textContent = module.label;
-            const tooltip = document.createElement('button');
-            tooltip.className = 'tooltip-button';
-            tooltip.type = 'button';
-            tooltip.textContent = '?';
-            tooltip.title = module.help || 'Toggle this module for the export.';
-            tooltip.setAttribute('aria-label', `About ${module.label}`);
-            summary.appendChild(input);
-            summary.appendChild(label);
-            summary.appendChild(tooltip);
-
-            const preview = document.createElement('textarea');
-            preview.readOnly = true;
-            preview.value = buildModulePreview(module, data.content);
-            details.appendChild(summary);
-            details.appendChild(preview);
-            groupWrapper.appendChild(details);
-
-            input.addEventListener('change', () => {
-              if (group.selectionType === 'single') {
-                group.modules.forEach((item) => state.modules.delete(item.id));
-                state.modules.add(module.id);
-              } else if (input.checked) {
-                state.modules.add(module.id);
-              } else if (!input.checked) {
-                state.modules.delete(module.id);
-              }
-              renderSummary(state, modules, transforms);
-              updateUrl(state);
-            });
-          });
-          moduleControls.appendChild(groupWrapper);
-        });
-      }
-
-      if (transformControls) {
-        transformControls.innerHTML = '';
-        transforms.forEach((transform) => {
+      if (proseControls) {
+        proseControls.innerHTML = '';
+        variants.forEach((variant) => {
           const { wrapper, input } = buildOptionCard({
-            id: `transform-${transform.id}`,
-            label: transform.label,
-            name: 'transform-mode',
-            checked: state.transform === transform.id
+            id: `variant-${variant.id}`,
+            label: variant.label,
+            name: 'prose-variant',
+            checked: state.variant === variant.id
           });
           input.addEventListener('change', () => {
-            state.transform = transform.id;
-            renderSummary(state, modules, transforms);
+            state.variant = variant.id;
+            renderSummary(state, variants);
             updateUrl(state);
           });
-          transformControls.appendChild(wrapper);
+          proseControls.appendChild(wrapper);
         });
       }
 
@@ -463,23 +333,23 @@
           });
           input.addEventListener('change', () => {
             state.output = output.id;
-            renderSummary(state, modules, transforms);
+            renderSummary(state, variants);
             updateUrl(state);
           });
           outputControls.appendChild(wrapper);
         });
       }
 
-      renderSummary(state, modules, transforms);
+      renderSummary(state, variants);
       updateUrl(state);
 
       if (downloadPrimaryButton) {
         downloadPrimaryButton.addEventListener('click', () => {
           runDownload(downloadPrimaryButton, () =>
             downloadSelection({
-              character: data,
-              moduleIds: Array.from(state.modules),
-              transformId: state.transform,
+              slug,
+              manifest,
+              proseVariant: state.variant,
               outputType: state.output
             })
           );
@@ -490,9 +360,8 @@
         downloadAllButton.addEventListener('click', () => {
           runDownload(downloadAllButton, () =>
             downloadCharacterBundle({
-              character: data,
-              moduleIds: Array.from(state.modules),
-              transformId: state.transform
+              slug,
+              manifest
             })
           );
         });

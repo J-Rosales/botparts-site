@@ -1,4 +1,6 @@
 const defaultBase = '';
+const DEFAULT_PROSE_VARIANTS = ['schema-like', 'hybrid'];
+const CATALOGUE_CANDIDATES = ['data/catalogue.json', 'data/characters.json'];
 // DEV-ONLY: localhost cache-busting helper for local testing. Safe to remove later.
 const IS_LOCALHOST = typeof window !== 'undefined'
   && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
@@ -27,6 +29,32 @@ export function getPageBase() {
   return document.body?.dataset?.pageBase ?? '';
 }
 
+export function getCharacterRoot(slug) {
+  const base = getBasePath();
+  const normalizedSlug = slug || '';
+  return `${base}data/characters/${normalizedSlug}/`;
+}
+
+export function getCharacterPngPath(slug, variantSlug = null) {
+  const root = getCharacterRoot(slug);
+  if (variantSlug) {
+    return `${root}variants/${variantSlug}/${slug}--${variantSlug}.png`;
+  }
+  return `${root}${slug}.png`;
+}
+
+export function getProseVariants(manifest = {}) {
+  const variants =
+    manifest?.x?.proseVariants ||
+    manifest?.proseVariants ||
+    manifest?.prose_variants ||
+    [];
+  if (Array.isArray(variants) && variants.length) {
+    return variants;
+  }
+  return DEFAULT_PROSE_VARIANTS;
+}
+
 function resolveAssetUrl(path) {
   if (!path) return null;
   if (/^https?:\/\//i.test(path)) return path;
@@ -36,14 +64,26 @@ function resolveAssetUrl(path) {
 }
 
 function resolveEntryImage(entry) {
+  const manifest = entry?.manifest;
   const candidate =
     entry?.cardImage ||
     entry?.image ||
+    manifest?.cardImage ||
+    manifest?.image ||
     entry?.media?.cardPng ||
     entry?.media?.card ||
+    manifest?.media?.cardPng ||
+    manifest?.media?.card ||
     entry?.assets?.cardPng ||
+    manifest?.assets?.cardPng ||
     null;
-  return resolveAssetUrl(candidate);
+  if (candidate) {
+    return resolveAssetUrl(candidate);
+  }
+  if (entry?.slug) {
+    return resolveAssetUrl(getCharacterPngPath(entry.slug));
+  }
+  return null;
 }
 
 const MONTH_ABBREVIATIONS = [
@@ -185,20 +225,98 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export async function fetchIndexData() {
+function normalizeCatalogueEntries(payload) {
+  if (!payload) {
+    return [];
+  }
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+  if (Array.isArray(payload.entries)) {
+    return payload.entries;
+  }
+  if (Array.isArray(payload.characters)) {
+    return payload.characters;
+  }
+  if (Array.isArray(payload.slugs)) {
+    return payload.slugs;
+  }
+  return [];
+}
+
+function normalizeManifestEntry(manifest, override = {}) {
+  const site = manifest?.site || manifest?.catalogue || manifest?.catalog || manifest?.x?.site || {};
+  const slug =
+    override.slug ||
+    manifest?.slug ||
+    site.slug ||
+    manifest?.id ||
+    '';
+  return {
+    slug,
+    name: override.name || site.name || manifest?.name || manifest?.title || slug,
+    description: override.description || site.description || manifest?.description || '',
+    shortDescription: override.shortDescription || site.shortDescription || manifest?.shortDescription || '',
+    tags: override.tags || site.tags || manifest?.tags || [],
+    spoilerTags: override.spoilerTags || site.spoilerTags || manifest?.spoilerTags || [],
+    featured: override.featured ?? site.featured ?? manifest?.featured ?? false,
+    uploadDate: override.uploadDate || site.updatedAt || manifest?.updatedAt || manifest?.uploadDate || '',
+    updatedAt: override.updatedAt || site.updatedAt || manifest?.updatedAt || '',
+    aiTokens: override.aiTokens ?? site.aiTokens ?? manifest?.aiTokens ?? null,
+    source: override.source || site.source || manifest?.source || null,
+    provenance: override.provenance || manifest?.provenance || null,
+    redistributeAllowed: override.redistributeAllowed || manifest?.redistributeAllowed || site.redistributeAllowed || '',
+    manifest,
+    proseVariants: getProseVariants(manifest),
+    variantSlugs: manifest?.x?.variantSlugs || manifest?.variantSlugs || []
+  };
+}
+
+async function fetchCatalogueSeed() {
   const base = getBasePath();
-  const response = await fetch(withDevCacheBust(`${base}data/index.json`));
+  for (const candidate of CATALOGUE_CANDIDATES) {
+    const response = await fetch(withDevCacheBust(`${base}${candidate}`));
+    if (response.ok) {
+      return response.json();
+    }
+  }
+  throw new Error('Unable to load catalogue data.');
+}
+
+export async function fetchCatalogueEntries() {
+  const seed = await fetchCatalogueSeed();
+  const rawEntries = normalizeCatalogueEntries(seed);
+  if (!rawEntries.length) {
+    return [];
+  }
+  const entries = await Promise.all(rawEntries.map(async (entry) => {
+    const slug = typeof entry === 'string' ? entry : entry?.slug;
+    if (!slug) {
+      return null;
+    }
+    const manifest = await fetchCharacterManifest(slug);
+    const override = typeof entry === 'string' ? {} : entry;
+    return normalizeManifestEntry(manifest, override);
+  }));
+  return entries.filter(Boolean);
+}
+
+export async function fetchCharacterManifest(slug) {
+  const root = getCharacterRoot(slug);
+  const response = await fetch(withDevCacheBust(`${root}manifest.json`));
   if (!response.ok) {
-    throw new Error('Unable to load index data.');
+    throw new Error(`Manifest not found: ${slug}`);
   }
   return response.json();
 }
 
-export async function fetchCharacterData(slug) {
-  const base = getBasePath();
-  const response = await fetch(withDevCacheBust(`${base}data/characters/${slug}.json`));
+export async function fetchCharacterSpec(slug, proseVariant = 'schema-like', variantSlug = null) {
+  const root = variantSlug
+    ? `${getCharacterRoot(slug)}variants/${variantSlug}/`
+    : getCharacterRoot(slug);
+  const response = await fetch(withDevCacheBust(`${root}spec_v2.${proseVariant}.json`));
   if (!response.ok) {
-    throw new Error(`Character not found: ${slug}`);
+    throw new Error(`Spec not found: ${slug} (${proseVariant})`);
   }
   return response.json();
 }
