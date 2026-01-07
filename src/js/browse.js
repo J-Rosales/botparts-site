@@ -1,5 +1,10 @@
 import { downloadSiteBundle } from './downloads.js';
-import { buildCharacterCard, fetchCharacterData, fetchIndexData } from './site-data.js';
+import {
+  buildCharacterCard,
+  fetchCatalogueEntries,
+  fetchCharacterSpec,
+  getProseVariants
+} from './site-data.js';
 
 console.debug('[CARD-WIRING] browse.js loaded');
 
@@ -54,6 +59,8 @@ function extractTokenCount(data) {
     data?.tokenCount,
     data?.stats?.tokenCount,
     data?.metrics?.tokenCount,
+    data?.data?.extensions?.token_count,
+    data?.data?.extensions?.tokenCount,
     data?.card?.extensions?.token_count,
     data?.card?.data?.extensions?.token_count,
     data?.baseCard?.extensions?.token_count,
@@ -67,6 +74,7 @@ function extractAltGreetingsCount(data) {
   const candidates = [
     data?.alternateGreetings,
     data?.content?.alternateGreetings,
+    data?.data?.alternate_greetings,
     data?.card?.data?.alternate_greetings,
     data?.baseCard?.data?.alternate_greetings,
   ];
@@ -294,9 +302,11 @@ async function hydrateEntryStats(entry) {
     uploadDate: parseDateValue(entry),
   };
   try {
-    const character = await fetchCharacterData(entry.slug);
-    stats.tokenCount = extractTokenCount(character);
-    stats.altGreetings = extractAltGreetingsCount(character);
+    const proseVariants = entry.proseVariants || getProseVariants(entry.manifest);
+    const primaryVariant = proseVariants[0] || 'schema-like';
+    const spec = await fetchCharacterSpec(entry.slug, primaryVariant);
+    stats.tokenCount = extractTokenCount(spec);
+    stats.altGreetings = extractAltGreetingsCount(spec);
   } catch (error) {
     stats.tokenCount = entry.tokenCount ?? 0;
     stats.altGreetings = entry.altGreetings ?? 0;
@@ -313,8 +323,7 @@ async function loadBrowse() {
   }
 
   try {
-    const data = await fetchIndexData();
-    const rawEntries = data.entries || [];
+    const rawEntries = await fetchCatalogueEntries();
 
     if (!rawEntries.length) {
       browseEmpty?.classList.remove('hidden');

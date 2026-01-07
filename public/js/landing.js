@@ -1,5 +1,5 @@
 (async () => {
-  const { buildCharacterCard, fetchIndexData } = await import('./site-data.js');
+  const { buildCharacterCard, fetchCatalogueEntries } = await import('./site-data.js');
 
   console.debug('[CARD-WIRING] landing.js loaded');
 
@@ -86,8 +86,8 @@
         });
         return;
       }
-      const data = await fetchIndexData();
-      const featured = (data.entries || []).filter((entry) => entry.featured);
+      const entries = await fetchCatalogueEntries();
+      const featured = entries.filter((entry) => entry.featured);
 
       if (!featured.length) {
         featuredEmpty?.classList.remove('hidden');
