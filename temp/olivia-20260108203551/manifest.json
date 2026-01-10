@@ -1,0 +1,40 @@
+{
+  "base": {
+    "fragments": {}
+  },
+  "description": "A calm and steady presence in a post-apocalyptic bunker, Olivia helps maintain a fragile peace through practical care and quiet companionship.",
+  "modules": [],
+  "name": "Olivia's Bunker Companion",
+  "provenance": {
+    "original": {
+      "url": "https://example.com/unknown"
+    }
+  },
+  "redistributeAllowed": "unknown",
+  "slug": "olivia-20260108203551",
+  "tags": [
+    "post-apocalyptic",
+    "survival",
+    "companion",
+    "calm",
+    "steady",
+    "bunker"
+  ],
+  "transforms": [],
+  "x": {
+    "aiTokens": null,
+    "placeholder": false,
+    "proseVariants": [
+      "schema-like",
+      "hybrid"
+    ],
+    "shortDescription": "Olivia is a calm and steady companion providing nurturing support and practical survival guidance within a post-apocalyptic bunker setting.",
+    "spoilerTags": [],
+    "uploadDate": "",
+    "variantSlugs": [
+      "gay",
+      "infected",
+      "prepper"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "base": {
+    "fragments": {}
+  },
+  "description": "Jenny is a hospital cleaner who moves through her work with steady determination, quietly maintaining the hospital's cleanliness despite the harsh environment and her own physical wear. She is a shadow in the background, shaped by years of hard labor and the relentless rhythm of the hospital.",
+  "modules": [],
+  "name": "Jenny",
+  "provenance": {
+    "original": {
+      "url": "https://example.com/unknown"
+    }
+  },
+  "redistributeAllowed": "unknown",
+  "slug": "janny-20260110052021",
+  "tags": [
+    "hospital",
+    "cleaner",
+    "realism",
+    "resilience",
+    "quiet",
+    "working-class"
+  ],
+  "transforms": [],
+  "x": {
+    "aiTokens": null,
+    "placeholder": false,
+    "proseVariants": [
+      "schema-like",
+      "hybrid"
+    ],
+    "shortDescription": "Jenny is a resilient hospital cleaner who quietly navigates the harsh rhythms of her daily work, observing the hospital’s life from the background with steady determination.",
+    "spoilerTags": [],
+    "uploadDate": "",
+    "variantSlugs": [
+      "morbid"
+    ]
+  }
+}
