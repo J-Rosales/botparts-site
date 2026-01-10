@@ -65,22 +65,6 @@ function resolveAssetUrl(path) {
 }
 
 function resolveEntryImage(entry) {
-  const manifest = entry?.manifest;
-  const candidate =
-    entry?.cardImage ||
-    entry?.image ||
-    manifest?.cardImage ||
-    manifest?.image ||
-    entry?.media?.cardPng ||
-    entry?.media?.card ||
-    manifest?.media?.cardPng ||
-    manifest?.media?.card ||
-    entry?.assets?.cardPng ||
-    manifest?.assets?.cardPng ||
-    null;
-  if (candidate) {
-    return resolveAssetUrl(candidate);
-  }
   if (entry?.slug) {
     return resolveAssetUrl(getCharacterPngPath(entry.slug));
   }

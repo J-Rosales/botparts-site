@@ -38,9 +38,9 @@ export function getCharacterRoot(slug) {
 export function getCharacterPngPath(slug, variantSlug = null) {
   const root = getCharacterRoot(slug);
   if (variantSlug) {
-    return `${root}variants/${variantSlug}/${slug}--${variantSlug}.png`;
+    return `${root}variants/${variantSlug}/avatarImage.png`;
   }
-  return `${root}${slug}.png`;
+  return `${root}avatarImage.png`;
 }
 
 export function getProseVariants(manifest = {}) {
@@ -64,22 +64,6 @@ function resolveAssetUrl(path) {
 }
 
 function resolveEntryImage(entry) {
-  const manifest = entry?.manifest;
-  const candidate =
-    entry?.cardImage ||
-    entry?.image ||
-    manifest?.cardImage ||
-    manifest?.image ||
-    entry?.media?.cardPng ||
-    entry?.media?.card ||
-    manifest?.media?.cardPng ||
-    manifest?.media?.card ||
-    entry?.assets?.cardPng ||
-    manifest?.assets?.cardPng ||
-    null;
-  if (candidate) {
-    return resolveAssetUrl(candidate);
-  }
   if (entry?.slug) {
     return resolveAssetUrl(getCharacterPngPath(entry.slug));
   }

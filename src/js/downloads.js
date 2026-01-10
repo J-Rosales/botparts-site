@@ -11,6 +11,7 @@ import {
 const ZIP_MIME = 'application/zip';
 const JSON_MIME = 'application/json';
 const PNG_MIME = 'image/png';
+const DEFAULT_AVATAR_FILENAME = 'avatarImage.png';
 const PNG_SIGNATURE = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]);
 
 const CRC_TABLE = (() => {
@@ -134,47 +135,40 @@ function getSpecFileName(variant) {
   return `spec_v2.${variant}.json`;
 }
 
-function getEmbeddedPngName(slug, variant) {
-  return `${slug}--${variant}.png`;
+function getEmbeddedPngName() {
+  return DEFAULT_AVATAR_FILENAME;
 }
 
-async function fetchPngAsset(slug, manifest, variantSlug = null) {
-  const candidate =
-    manifest?.cardImage ||
-    manifest?.image ||
-    manifest?.media?.cardPng ||
-    manifest?.media?.card ||
-    manifest?.assets?.cardPng ||
-    null;
-  const resolved = resolveAssetUrl(candidate) || resolveAssetUrl(getCharacterPngPath(slug, variantSlug));
+async function fetchPngAsset(slug, variantSlug = null) {
+  const resolved = resolveAssetUrl(getCharacterPngPath(slug, variantSlug));
   if (!resolved) return null;
   const response = await fetch(withDevCacheBust(resolved));
   if (!response.ok) return null;
   const blob = await response.blob();
-  return { blob, name: resolved.split('/').pop() || 'avatarImage.png' };
+  return { blob, name: resolved.split('/').pop() || DEFAULT_AVATAR_FILENAME };
 }
 
-async function writeEmbeddedPng(folder, slug, variant, manifest, spec) {
-  const pngAsset = await fetchPngAsset(slug, manifest);
+async function writeEmbeddedPng(folder, slug, variant, spec, variantSlug = null) {
+  const pngAsset = await fetchPngAsset(slug, variantSlug);
   if (!pngAsset) {
     folder.file(`${slug}--${variant}-png-metadata.json`, stringifyJson(spec));
     return { embedded: false, missing: true };
   }
   try {
     const embedded = await embedMetadataInPng(pngAsset.blob, stringifyJson(spec));
-    folder.file(getEmbeddedPngName(slug, variant), embedded);
+    folder.file(getEmbeddedPngName(), embedded);
     return { embedded: true, missing: false };
   } catch (error) {
-    folder.file(getEmbeddedPngName(slug, variant), pngAsset.blob);
+    folder.file(getEmbeddedPngName(), pngAsset.blob);
     folder.file(`${slug}--${variant}-metadata.json`, stringifyJson(spec));
     return { embedded: false, missing: false };
   }
 }
 
-export async function downloadSelection({ slug, manifest, proseVariant, outputType }) {
+export async function downloadSelection({ slug, manifest, proseVariant, outputType, variantSlug = null }) {
   const variants = getProseVariants(manifest);
   const resolvedVariant = proseVariant || variants[0] || 'schema-like';
-  const spec = await fetchCharacterSpec(slug, resolvedVariant);
+  const spec = await fetchCharacterSpec(slug, resolvedVariant, variantSlug);
 
   if (outputType === 'json') {
     downloadBlob(getSpecFileName(resolvedVariant), JSON_MIME, stringifyJson(spec));
@@ -182,13 +176,13 @@ export async function downloadSelection({ slug, manifest, proseVariant, outputTy
   }
 
   if (outputType === 'png') {
-    const pngAsset = await fetchPngAsset(slug, manifest);
+    const pngAsset = await fetchPngAsset(slug, variantSlug);
     if (pngAsset) {
       try {
         const embedded = await embedMetadataInPng(pngAsset.blob, stringifyJson(spec));
-        downloadBlob(getEmbeddedPngName(slug, resolvedVariant), PNG_MIME, embedded);
+        downloadBlob(getEmbeddedPngName(), PNG_MIME, embedded);
       } catch (error) {
-        downloadBlob(getEmbeddedPngName(slug, resolvedVariant), PNG_MIME, pngAsset.blob);
+        downloadBlob(getEmbeddedPngName(), PNG_MIME, pngAsset.blob);
         downloadBlob(`${slug}--${resolvedVariant}-metadata.json`, JSON_MIME, stringifyJson(spec));
       }
       return;
@@ -200,15 +194,25 @@ export async function downloadSelection({ slug, manifest, proseVariant, outputTy
 export async function downloadCharacterBundle({ slug, manifest }) {
   const JSZip = ensureZipSupport();
   const zip = new JSZip();
-  const folder = zip.folder(slug);
   const variants = getProseVariants(manifest);
+  const variantSlugs = manifest?.x?.variantSlugs || manifest?.variantSlugs || [];
+  const folder = zip.folder(slug);
 
   folder.file('manifest.json', stringifyJson(manifest));
 
   for (const variant of variants) {
     const spec = await fetchCharacterSpec(slug, variant);
     folder.file(getSpecFileName(variant), stringifyJson(spec));
-    await writeEmbeddedPng(folder, slug, variant, manifest, spec);
+    await writeEmbeddedPng(folder, slug, variant, spec);
+  }
+
+  for (const variantSlug of variantSlugs) {
+    const variantFolder = zip.folder(`${slug}/variants/${variantSlug}`);
+    for (const variant of variants) {
+      const spec = await fetchCharacterSpec(slug, variant, variantSlug);
+      variantFolder.file(getSpecFileName(variant), stringifyJson(spec));
+      await writeEmbeddedPng(variantFolder, slug, variant, spec, variantSlug);
+    }
   }
 
   const blob = await zip.generateAsync({ type: 'blob' });
@@ -224,12 +228,21 @@ export async function downloadSiteBundle() {
     const slug = entry.slug;
     const manifest = entry.manifest || await fetchCharacterManifest(slug);
     const variants = getProseVariants(manifest);
+    const variantSlugs = manifest?.x?.variantSlugs || manifest?.variantSlugs || [];
     const folder = zip.folder(slug);
     folder.file('manifest.json', stringifyJson(manifest));
     for (const variant of variants) {
       const spec = await fetchCharacterSpec(slug, variant);
       folder.file(getSpecFileName(variant), stringifyJson(spec));
-      await writeEmbeddedPng(folder, slug, variant, manifest, spec);
+      await writeEmbeddedPng(folder, slug, variant, spec);
+    }
+    for (const variantSlug of variantSlugs) {
+      const variantFolder = zip.folder(`${slug}/variants/${variantSlug}`);
+      for (const variant of variants) {
+        const spec = await fetchCharacterSpec(slug, variant, variantSlug);
+        variantFolder.file(getSpecFileName(variant), stringifyJson(spec));
+        await writeEmbeddedPng(variantFolder, slug, variant, spec, variantSlug);
+      }
     }
   }
 
