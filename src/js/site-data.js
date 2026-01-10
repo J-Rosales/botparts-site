@@ -1,4 +1,5 @@
 const defaultBase = '';
+const DEFAULT_AVATAR_FILENAME = 'avatarImage.png';
 const DEFAULT_PROSE_VARIANTS = ['schema-like', 'hybrid'];
 const CATALOGUE_CANDIDATES = ['data/catalogue.json', 'data/characters.json'];
 // DEV-ONLY: localhost cache-busting helper for local testing. Safe to remove later.
@@ -38,9 +39,9 @@ export function getCharacterRoot(slug) {
 export function getCharacterPngPath(slug, variantSlug = null) {
   const root = getCharacterRoot(slug);
   if (variantSlug) {
-    return `${root}variants/${variantSlug}/${slug}--${variantSlug}.png`;
+    return `${root}variants/${variantSlug}/${DEFAULT_AVATAR_FILENAME}`;
   }
-  return `${root}${slug}.png`;
+  return `${root}${DEFAULT_AVATAR_FILENAME}`;
 }
 
 export function getProseVariants(manifest = {}) {
