@@ -151,7 +151,7 @@ async function fetchPngAsset(slug, manifest, variantSlug = null) {
   const response = await fetch(withDevCacheBust(resolved));
   if (!response.ok) return null;
   const blob = await response.blob();
-  return { blob, name: resolved.split('/').pop() || `${slug}.png` };
+  return { blob, name: resolved.split('/').pop() || 'avatarImage.png' };
 }
 
 async function writeEmbeddedPng(folder, slug, variant, manifest, spec) {
