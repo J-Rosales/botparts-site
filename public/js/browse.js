@@ -172,31 +172,27 @@
     });
   }
 
-  function updateSummary() {
-    if (!filterSummary) {
-      return;
-    }
-    const includeTags = getActiveTags('include');
-    const excludeTags = getActiveTags('exclude');
-    const searchTerm = getSearchTerm();
-    const parts = [];
-    if (searchTerm) {
-      parts.push(`Search: “${searchTerm}”`);
-    }
-    if (includeTags.length) {
-      const labels = includeTags.map((tag) => tagLabels.get(tag) ?? tag);
-      parts.push(`Include: ${labels.join(', ')}`);
-    }
-    if (excludeTags.length) {
-      const labels = excludeTags.map((tag) => tagLabels.get(tag) ?? tag);
-      parts.push(`Exclude: ${labels.join(', ')}`);
-    }
-    if (!parts.length) {
-      filterSummary.textContent = 'No filters applied yet.';
-      return;
-    }
-    filterSummary.textContent = parts.join(' · ');
+function updateSummary() {
+  if (!filterSummary) {
+    return;
   }
+  const includeTags = getActiveTags('include');
+  const excludeTags = getActiveTags('exclude');
+  const tags = [];
+  if (includeTags.length) {
+    const labels = includeTags.map((tag) => tagLabels.get(tag) ?? tag);
+    tags.push(...labels.map((label) => `+${label}`));
+  }
+  if (excludeTags.length) {
+    const labels = excludeTags.map((tag) => tagLabels.get(tag) ?? tag);
+    tags.push(...labels.map((label) => `-${label}`));
+  }
+  if (!tags.length) {
+    filterSummary.textContent = 'Filter: none';
+    return;
+  }
+  filterSummary.textContent = `Filter: ${tags.join(', ')}`;
+}
 
   function updateUrlState() {
     const params = new URLSearchParams();
