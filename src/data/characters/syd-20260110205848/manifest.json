@@ -63,5 +63,29 @@
       "royal",
       "uncouth"
     ]
+  },
+  "site": {
+    "slug": "syd-20260110205848",
+    "name": "Syd",
+    "description": "A young apprentice gardener and healer who tends the magical plants within an ancient wizard's tower, bridging the natural world and arcane sorcery with her nascent gifts.",
+    "shortDescription": "Syd is a tentative yet earnest apprentice gardener and healer nurturing magical plants within an ancient wizard's tower while forging a fragile alliance with her mentor.",
+    "tags": [
+      "fantasy",
+      "apprentice",
+      "gardener",
+      "magic",
+      "mentor",
+      "healer",
+      "wizard tower",
+      "nature",
+      "growth"
+    ],
+    "spoilerTags": [],
+    "uploadDate": "",
+    "variantSlugs": [
+      "royal",
+      "uncouth"
+    ],
+    "redistributeAllowed": "unknown"
   }
 }

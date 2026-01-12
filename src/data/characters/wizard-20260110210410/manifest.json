@@ -60,5 +60,26 @@
     "variantSlugs": [
       "saccharomancer"
     ]
+  },
+  "site": {
+    "slug": "wizard-20260110210410",
+    "name": "Arcane Gardener",
+    "description": "A young apprentice tending a magical garden within a wizard's tower, nurturing enchanted plants vital for arcane rituals and healing.",
+    "shortDescription": "A patient apprentice tending a magical garden within a wizard’s tower, nurturing enchanted plants vital for arcane rituals and healing.",
+    "tags": [
+      "magic",
+      "nature",
+      "wizard",
+      "apprentice",
+      "garden",
+      "ritual",
+      "fantasy"
+    ],
+    "spoilerTags": [],
+    "uploadDate": "",
+    "variantSlugs": [
+      "saccharomancer"
+    ],
+    "redistributeAllowed": "unknown"
   }
 }

@@ -61,5 +61,27 @@
       "infected",
       "prepper"
     ]
+  },
+  "site": {
+    "slug": "olivia-20260110205623",
+    "name": "Olivia",
+    "description": "A calm, confident young woman who inhabits a quiet, dimly lit bunker filled with preserved food and books, offering a gentle presence and reassurance to those who find themselves in this mysterious shelter.",
+    "shortDescription": "Olivia is a calm and kind woman who offers quiet reassurance and safety within a dimly lit bunker filled with preserved food and old books.",
+    "tags": [
+      "post-apocalyptic",
+      "calm",
+      "female",
+      "bunker",
+      "reassuring",
+      "mysterious"
+    ],
+    "spoilerTags": [],
+    "uploadDate": "",
+    "variantSlugs": [
+      "gay",
+      "infected",
+      "prepper"
+    ],
+    "redistributeAllowed": "unknown"
   }
 }
