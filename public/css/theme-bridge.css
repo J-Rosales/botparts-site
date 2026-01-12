@@ -110,7 +110,7 @@ a:hover {
 .module-item,
 .changelog li,
 .testimonial-card {
-  background: var(--panel);
+  background-color: var(--panel);
   border-color: var(--border);
   box-shadow: var(--shadow);
 }
