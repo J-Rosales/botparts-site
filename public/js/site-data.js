@@ -351,20 +351,6 @@ export function buildCharacterCard(entry) {
   nameLink.appendChild(title);
   nameRow.appendChild(nameLink);
 
-  const imageRow = document.createElement('div');
-  imageRow.className = 'card-image-row';
-  const imageLink = document.createElement('a');
-  imageLink.className = 'card-link';
-  imageLink.href = href;
-  const image = document.createElement('img');
-  image.src = resolvedImageUrl;
-  image.alt = entry.name ? `${entry.name} preview` : 'Character preview';
-  image.loading = 'lazy';
-  if (!imageUrl) {
-    image.dataset.placeholder = 'true';
-  }
-  imageLink.appendChild(image);
-  imageRow.appendChild(imageLink);
 
   const tagRow = document.createElement('div');
   tagRow.className = 'card-tags';
@@ -415,8 +401,6 @@ export function buildCharacterCard(entry) {
   footerRow.appendChild(footerActions);
 
   content.appendChild(nameRow);
-  content.appendChild(imageRow);
-
   if (shortDescription) {
     const descriptionRow = document.createElement('p');
     descriptionRow.className = 'card-short-description';
