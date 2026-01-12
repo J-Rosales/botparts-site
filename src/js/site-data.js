@@ -229,6 +229,18 @@ function normalizeCatalogueEntries(payload) {
   return [];
 }
 
+function resolveDateString(...values) {
+  for (const value of values) {
+    if (value === '') {
+      return '';
+    }
+    if (typeof value === 'string') {
+      return value;
+    }
+  }
+  return undefined;
+}
+
 function normalizeManifestEntry(manifest, override = {}) {
   const site = manifest?.site || manifest?.catalogue || manifest?.catalog || manifest?.x?.site || {};
   const slug =
@@ -237,6 +249,22 @@ function normalizeManifestEntry(manifest, override = {}) {
     site.slug ||
     manifest?.id ||
     '';
+  const uploadDate = resolveDateString(
+    override.uploadDate,
+    site.uploadDate,
+    manifest?.uploadDate,
+    manifest?.x?.uploadDate,
+    manifest?.updated,
+    manifest?.x?.updated
+  ) ?? '';
+  const updatedAtRaw = resolveDateString(
+    override.updatedAt,
+    site.updatedAt,
+    manifest?.updatedAt,
+    manifest?.x?.updatedAt
+  );
+  const updatedAt = updatedAtRaw && updatedAtRaw !== '' ? updatedAtRaw : uploadDate;
+
   return {
     slug,
     name: override.name || site.name || manifest?.name || manifest?.title || slug,
@@ -245,8 +273,8 @@ function normalizeManifestEntry(manifest, override = {}) {
     tags: override.tags || site.tags || manifest?.tags || [],
     spoilerTags: override.spoilerTags || site.spoilerTags || manifest?.spoilerTags || [],
     featured: override.featured ?? site.featured ?? manifest?.featured ?? false,
-    uploadDate: override.uploadDate || site.updatedAt || manifest?.updatedAt || manifest?.uploadDate || '',
-    updatedAt: override.updatedAt || site.updatedAt || manifest?.updatedAt || '',
+    uploadDate,
+    updatedAt,
     aiTokens: override.aiTokens ?? site.aiTokens ?? manifest?.aiTokens ?? null,
     source: override.source || site.source || manifest?.source || null,
     provenance: override.provenance || manifest?.provenance || null,
@@ -321,8 +349,11 @@ export function buildCharacterCard(entry) {
   const shortDescription = typeof entry.shortDescription === 'string'
     ? entry.shortDescription.trim()
     : '';
-  const uploadDate = typeof entry.uploadDate === 'string'
-    ? formatUploadDate(entry.uploadDate.trim())
+  const dateForCard = typeof entry.updatedAt === 'string' && entry.updatedAt.trim()
+    ? entry.updatedAt.trim()
+    : entry.uploadDate;
+  const uploadDate = typeof dateForCard === 'string'
+    ? formatUploadDate(dateForCard.trim())
     : '';
   const imageUrl = resolveEntryImage(entry);
   const resolvedImageUrl = imageUrl || buildPlaceholderImage(entry);

@@ -293,7 +293,15 @@ function setupModal() {
       metaEl.innerHTML = '';
       buildMetaRow('Slug', manifest.slug || slug);
       buildMetaRow('Character type', manifest.type || site.type || 'Character');
-      buildMetaRow('Last update', site.updatedAt || manifest.updatedAt || manifest.uploadDate || 'Pending');
+      const updatedAt =
+        site.updatedAt ||
+        manifest.updatedAt ||
+        manifest?.x?.updatedAt ||
+        site.uploadDate ||
+        manifest.uploadDate ||
+        manifest?.x?.uploadDate ||
+        '';
+      buildMetaRow('Last update', updatedAt || 'Pending');
       buildMetaRow('Attribution', buildAttributionSentence(manifest));
       const sourceLabel = manifest.provenance?.original?.label || manifest.source?.label || 'Original source';
       buildMetaRow('Primary source', sourceLabel);

@@ -83,7 +83,7 @@ function extractAltGreetingsCount(data) {
 }
 
 function parseDateValue(entry) {
-  const raw = entry.uploadDate ?? entry.lastUpdated;
+  const raw = entry.updatedAt || entry.uploadDate || entry.lastUpdated;
   if (!raw) {
     return 0;
   }
@@ -140,7 +140,7 @@ function sortEntries(list) {
     sorted.sort((a, b) => b.stats.altGreetings - a.stats.altGreetings);
     return sorted;
   }
-  sorted.sort((a, b) => b.stats.uploadDate - a.stats.uploadDate);
+  sorted.sort((a, b) => b.stats.updatedAt - a.stats.updatedAt);
   return sorted;
 }
 
@@ -299,7 +299,7 @@ async function hydrateEntryStats(entry) {
   const stats = {
     tokenCount: 0,
     altGreetings: 0,
-    uploadDate: parseDateValue(entry),
+    updatedAt: parseDateValue(entry),
   };
   try {
     const proseVariants = entry.proseVariants || getProseVariants(entry.manifest);
