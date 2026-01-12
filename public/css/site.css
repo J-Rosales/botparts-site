@@ -202,6 +202,9 @@ main {
   width: 100%;
   max-width: var(--card-width);
   justify-self: center;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--card-image-height);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -249,12 +252,15 @@ main {
   background: none;
   color: inherit;
   padding: var(--card-content-padding);
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--card-content-gap);
-  justify-items: center;
+  align-items: center;
+  justify-content: flex-end;
   text-align: center;
   position: relative;
   z-index: 2;
+  flex: 1;
 }
 
 .character-card .card-title {
@@ -263,27 +269,6 @@ main {
   text-overflow: ellipsis;
 }
 
-.character-card .card-image-row {
-  margin: calc(-1 * var(--card-content-padding));
-  margin-bottom: var(--card-content-gap);
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  min-height: var(--card-image-height);
-}
-
-.character-card .card-image-row .card-link {
-  display: block;
-}
-
-.character-card .card-image-row img {
-  display: block;
-  width: 100%;
-  height: var(--card-image-height);
-  object-fit: cover;
-  object-position: center;
-  opacity: 0;
-}
 
 .character-card .card-tags {
   display: flex;
