@@ -9,13 +9,18 @@ It only validates and mirrors `src/` into `public/` for deployment.
 - `src/` is the canonical UI source.
 
 ## Local commands (run from the parent folder)
+### 1) Sync generator output into src/data
+```bash
+rsync -a --delete \
+  botparts-generator/output/ \
+  botparts-site/src/data/
+```
+
+### 2) Validate + mirror src → public
 ```bash
 cd botparts-site
 
-# 1) Validate static contract (schema + integrity checks)
 python -m pytest tests/test_static_contract.py
-
-# 2) Mirror src/ to public/ (deployable snapshot)
 rsync -a --delete src/ public/
 ```
 

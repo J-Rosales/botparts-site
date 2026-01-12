@@ -7,16 +7,22 @@ Provide a lightweight, static-safe deployment workflow that:
 - uploads `public/` to Neocities.
 
 ## Local workflow (parent folder)
+### 1) Sync generator output into src/data
+```bash
+rsync -a --delete \
+  botparts-generator/output/ \
+  botparts-site/src/data/
+```
+
+### 2) Validate + mirror src → public
 ```bash
 cd botparts-site
-
-# Validate the static contract
 python -m pytest tests/test_static_contract.py
-
-# Mirror src/ to public/ for deployable output
 rsync -a --delete src/ public/
+```
 
-# Deploy to Neocities (if CLI is installed)
+### 3) Deploy to Neocities
+```bash
 neocities push public
 ```
 
