@@ -1,1 +1,6 @@
-{}
+{
+  "scripts": {
+    "deploy": "node scripts/deploy-neocities.mjs --dir public",
+    "deploy:clean": "node scripts/deploy-neocities.mjs --dir public --clean"
+  }
+}
