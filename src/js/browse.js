@@ -177,24 +177,20 @@ function updateSummary() {
   }
   const includeTags = getActiveTags('include');
   const excludeTags = getActiveTags('exclude');
-  const searchTerm = getSearchTerm();
-  const parts = [];
-  if (searchTerm) {
-    parts.push(`Search: “${searchTerm}”`);
-  }
+  const tags = [];
   if (includeTags.length) {
     const labels = includeTags.map((tag) => tagLabels.get(tag) ?? tag);
-    parts.push(`Include: ${labels.join(', ')}`);
+    tags.push(...labels.map((label) => `+${label}`));
   }
   if (excludeTags.length) {
     const labels = excludeTags.map((tag) => tagLabels.get(tag) ?? tag);
-    parts.push(`Exclude: ${labels.join(', ')}`);
+    tags.push(...labels.map((label) => `-${label}`));
   }
-  if (!parts.length) {
-    filterSummary.textContent = 'No filters applied yet.';
+  if (!tags.length) {
+    filterSummary.textContent = 'Filter: none';
     return;
   }
-  filterSummary.textContent = parts.join(' · ');
+  filterSummary.textContent = `Filter: ${tags.join(', ')}`;
 }
 
 function updateUrlState() {
