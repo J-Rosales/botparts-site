@@ -325,11 +325,14 @@ export function buildCharacterCard(entry) {
     : '';
   const imageUrl = resolveEntryImage(entry);
   const resolvedImageUrl = imageUrl || buildPlaceholderImage(entry);
+  const safeImageUrl = resolvedImageUrl.replace(/"/g, '%22');
   const aiTokenLabel = entry.aiTokens != null && entry.aiTokens !== ''
     ? `AI tokens: ${entry.aiTokens}`
     : 'AI tokens: unknown';
   const isSpoilerOpen = spoilerState.get(slug) ?? false;
   const isLiked = likedState.get(slug) ?? false;
+
+  card.style.setProperty('--card-background-image', `url("${safeImageUrl}")`);
 
   const content = document.createElement('div');
   content.className = 'card-content';
