@@ -438,8 +438,9 @@ main {
 .character-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .character-left,
@@ -454,6 +455,29 @@ main {
   border: 1px solid var(--border);
   overflow: hidden;
   position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  height: 100%;
+}
+
+.character-left {
+  display: contents;
+}
+
+.character-left .detail-card:not(#characterChangelogCard) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+#characterChangelogCard {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.character-right {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
 }
 
 .character-media {
@@ -843,6 +867,21 @@ main {
 
   .character-layout {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .character-left {
+    display: grid;
+    gap: 20px;
+  }
+
+  .character-media-card,
+  .character-right,
+  .character-left .detail-card,
+  #characterChangelogCard {
+    grid-column: auto;
+    grid-row: auto;
+    height: auto;
   }
 
   .config-panel {
