@@ -30,7 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         handleScroll();
     }
 
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    let currentPage = window.location.pathname.split('/').pop() || 'browse.html';
+    if (currentPage === 'index.html') {
+        currentPage = 'browse.html';
+    }
     document.querySelectorAll('.nav-link').forEach(link => {
         if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
