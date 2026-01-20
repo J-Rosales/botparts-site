@@ -12,14 +12,17 @@ const browseGrid = document.getElementById('browseGrid');
 const browseEmpty = document.getElementById('browseEmpty');
 const searchInput = document.getElementById('searchInput');
 const sortSelect = document.getElementById('sortSelect');
+const tagFilterPanel = document.querySelector('.tag-filter-panel');
 const tagFilterList = document.getElementById('tagFilterList');
 const filterSummary = document.getElementById('filterSummary');
+const tagFilterToggle = document.getElementById('tagFilterToggle');
 const downloadEverythingButton = document.getElementById('downloadEverythingSite');
 
 const tagStates = new Map();
 const tagLabels = new Map();
 let entries = [];
 let filteredEntries = [];
+let isTagFilterExpanded = false;
 
 const TAG_STATE_CYCLE = ['off', 'include', 'exclude'];
 
@@ -268,6 +271,51 @@ function renderTagFilters(tags) {
   });
 }
 
+function setTagFilterExpanded(expanded) {
+  if (!tagFilterPanel || !tagFilterToggle) {
+    return;
+  }
+  isTagFilterExpanded = expanded;
+  tagFilterPanel.classList.toggle('is-collapsed', !expanded);
+  tagFilterPanel.classList.toggle('is-expanded', expanded);
+  tagFilterToggle.textContent = expanded ? 'Show fewer' : 'Show all';
+  tagFilterToggle.setAttribute('aria-expanded', String(expanded));
+}
+
+function updateTagFilterFoldout() {
+  if (!tagFilterPanel || !tagFilterList || !tagFilterToggle) {
+    return;
+  }
+  const chips = Array.from(tagFilterList.children);
+  if (!chips.length) {
+    tagFilterToggle.hidden = true;
+    setTagFilterExpanded(true);
+    return;
+  }
+
+  const firstRowTop = chips[0].offsetTop;
+  let maxBottom = 0;
+  let hasMoreRows = false;
+
+  chips.forEach((chip) => {
+    const top = chip.offsetTop;
+    const bottom = top + chip.offsetHeight;
+    if (top === firstRowTop) {
+      maxBottom = Math.max(maxBottom, bottom);
+    } else if (top > firstRowTop) {
+      hasMoreRows = true;
+    }
+  });
+
+  tagFilterPanel.style.setProperty('--tag-filter-row-height', `${maxBottom}px`);
+  tagFilterToggle.hidden = !hasMoreRows;
+  if (!hasMoreRows) {
+    setTagFilterExpanded(true);
+  } else {
+    setTagFilterExpanded(isTagFilterExpanded);
+  }
+}
+
 function loadStateFromUrl(tags) {
   const params = new URLSearchParams(window.location.search);
   const searchValue = params.get('q');
@@ -346,9 +394,16 @@ async function loadBrowse() {
     });
     loadStateFromUrl(tagList);
     renderTagFilters(tagList);
+    requestAnimationFrame(updateTagFilterFoldout);
 
     searchInput?.addEventListener('input', applyFilters);
     sortSelect?.addEventListener('change', applyFilters);
+    tagFilterToggle?.addEventListener('click', () => {
+      setTagFilterExpanded(!isTagFilterExpanded);
+    });
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(updateTagFilterFoldout);
+    });
     if (downloadEverythingButton) {
       downloadEverythingButton.addEventListener('click', () => {
         runDownload(downloadEverythingButton, () => downloadSiteBundle());

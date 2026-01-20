@@ -783,15 +783,44 @@ main {
   gap: 16px;
 }
 
+.tag-filter-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .tag-filter-header {
   margin: 0;
   color: var(--muted);
+}
+
+.tag-filter-toggle {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.tag-filter-toggle:hover,
+.tag-filter-toggle:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  outline: none;
 }
 
 .tag-filter-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+.tag-filter-panel.is-collapsed .tag-filter-list {
+  max-height: var(--tag-filter-row-height, 48px);
+  overflow: hidden;
 }
 
 .tag-filter-chip {
