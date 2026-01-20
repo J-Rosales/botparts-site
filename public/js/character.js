@@ -269,7 +269,7 @@
         ...variantSlugs.map((variantSlug) => ({ id: variantSlug, label: variantSlug }))
       ];
 
-      document.title = `${name} | Bot Catalogue`;
+      document.title = `${name} | Botparts Catalogue`;
       if (nameEl) nameEl.textContent = name;
       if (descriptionEl) descriptionEl.textContent = description;
 

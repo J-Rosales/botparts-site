@@ -337,6 +337,8 @@ export function buildCharacterCard(entry) {
   card.setAttribute('data-built-by', 'src/js/site-data.js::buildCharacterCard');
   card.setAttribute('data-built-at', new Date().toISOString());
   card.setAttribute('data-built-slug', entry?.slug ?? '');
+  card.setAttribute('role', 'button');
+  card.tabIndex = 0;
 
   const pageBase = getPageBase();
   const slug = entry.slug || '';
@@ -360,6 +362,33 @@ export function buildCharacterCard(entry) {
     : 'AI tokens: unknown';
   const isSpoilerOpen = spoilerState.get(slug) ?? false;
   const isLiked = likedState.get(slug) ?? false;
+  const cardName = entry.name || entry.slug || 'Untitled';
+
+  card.setAttribute('aria-label', `Open ${cardName} details`);
+  const navigateToCard = () => {
+    window.location.assign(href);
+  };
+
+  card.addEventListener('click', (event) => {
+    if (event.defaultPrevented) {
+      return;
+    }
+    if (event.target instanceof Element
+      && event.target.closest('button, a, input, select, textarea, label')) {
+      return;
+    }
+    navigateToCard();
+  });
+
+  card.addEventListener('keydown', (event) => {
+    if (event.target !== card) {
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      navigateToCard();
+    }
+  });
 
   card.style.setProperty('--card-background-image', `url("${safeImageUrl}")`);
 
@@ -371,14 +400,10 @@ export function buildCharacterCard(entry) {
 
   const nameRow = document.createElement('div');
   nameRow.className = 'card-name-row';
-  const nameLink = document.createElement('a');
-  nameLink.className = 'card-link';
-  nameLink.href = href;
   const title = document.createElement('h3');
   title.className = 'card-title';
-  title.textContent = entry.name || entry.slug || 'Untitled';
-  nameLink.appendChild(title);
-  nameRow.appendChild(nameLink);
+  title.textContent = cardName;
+  nameRow.appendChild(title);
 
 
   const tagRow = document.createElement('div');
