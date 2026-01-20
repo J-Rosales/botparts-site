@@ -25,6 +25,18 @@ let filteredEntries = [];
 let isTagFilterExpanded = false;
 
 const TAG_STATE_CYCLE = ['off', 'include', 'exclude'];
+const DEFAULT_COLLAPSED_TAG_LIMIT = 8;
+
+function getCollapsedTagLimit() {
+  const width = window.innerWidth;
+  if (width < 600) {
+    return Math.max(4, DEFAULT_COLLAPSED_TAG_LIMIT - 2);
+  }
+  if (width < 900) {
+    return DEFAULT_COLLAPSED_TAG_LIMIT;
+  }
+  return DEFAULT_COLLAPSED_TAG_LIMIT + 2;
+}
 
 function normalizeTag(tag) {
   return tag.trim().toLowerCase();
@@ -282,6 +294,20 @@ function setTagFilterExpanded(expanded) {
   tagFilterToggle.setAttribute('aria-expanded', String(expanded));
 }
 
+function applyTagFilterVisibility(limit) {
+  if (!tagFilterList) {
+    return;
+  }
+  const chips = Array.from(tagFilterList.children);
+  const maxVisible = limit ?? getCollapsedTagLimit();
+  chips.forEach((chip, index) => {
+    chip.hidden = !isTagFilterExpanded && index >= maxVisible;
+  });
+  if (tagFilterToggle) {
+    tagFilterToggle.hidden = chips.length <= maxVisible;
+  }
+}
+
 function updateTagFilterFoldout() {
   if (!tagFilterPanel || !tagFilterList || !tagFilterToggle) {
     return;
@@ -292,28 +318,15 @@ function updateTagFilterFoldout() {
     setTagFilterExpanded(true);
     return;
   }
-
-  const firstRowTop = chips[0].offsetTop;
-  let maxBottom = 0;
-  let hasMoreRows = false;
-
-  chips.forEach((chip) => {
-    const top = chip.offsetTop;
-    const bottom = top + chip.offsetHeight;
-    if (top === firstRowTop) {
-      maxBottom = Math.max(maxBottom, bottom);
-    } else if (top > firstRowTop) {
-      hasMoreRows = true;
-    }
-  });
-
-  tagFilterPanel.style.setProperty('--tag-filter-row-height', `${maxBottom}px`);
-  tagFilterToggle.hidden = !hasMoreRows;
-  if (!hasMoreRows) {
+  const limit = getCollapsedTagLimit();
+  const hasMoreChips = chips.length > limit;
+  tagFilterToggle.hidden = !hasMoreChips;
+  if (!hasMoreChips) {
     setTagFilterExpanded(true);
   } else {
     setTagFilterExpanded(isTagFilterExpanded);
   }
+  applyTagFilterVisibility(limit);
 }
 
 function loadStateFromUrl(tags) {
@@ -400,6 +413,7 @@ async function loadBrowse() {
     sortSelect?.addEventListener('change', applyFilters);
     tagFilterToggle?.addEventListener('click', () => {
       setTagFilterExpanded(!isTagFilterExpanded);
+      applyTagFilterVisibility();
     });
     window.addEventListener('resize', () => {
       requestAnimationFrame(updateTagFilterFoldout);
