@@ -62,14 +62,23 @@ function formatSpecValue(value) {
   return JSON.stringify(value, null, 2);
 }
 
+function resolveSpecData(spec) {
+  if (!spec) return null;
+  if (spec.data && typeof spec.data === 'object') {
+    return spec.data;
+  }
+  return spec;
+}
+
 function setSpecFieldValues(spec, fallback = '') {
+  const specData = resolveSpecData(spec);
   Object.entries(specFieldMap).forEach(([key, fieldEl]) => {
     if (!fieldEl) return;
-    if (!spec) {
+    if (!specData) {
       fieldEl.value = fallback;
       return;
     }
-    fieldEl.value = formatSpecValue(spec[key]);
+    fieldEl.value = formatSpecValue(specData[key]);
   });
 }
 
