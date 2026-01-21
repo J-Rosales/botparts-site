@@ -50,6 +50,7 @@ const specFieldMap = {
   system_prompt: specSystemPrompt,
   post_history_instructions: specPostHistoryInstructions
 };
+const specCache = new Map();
 
 function hasSpecFields() {
   return Object.values(specFieldMap).some(Boolean);
@@ -70,6 +71,32 @@ function setSpecFieldValues(spec, fallback = '') {
     }
     fieldEl.value = formatSpecValue(spec[key]);
   });
+}
+
+function getSpecCacheKey(proseVariant, variantSlug) {
+  return `${proseVariant || ''}::${variantSlug || 'canon'}`;
+}
+
+async function preloadSpecs(slug, proseVariants, variantSlugs) {
+  if (!hasSpecFields()) return;
+  const variants = [null, ...variantSlugs];
+  const tasks = [];
+  proseVariants.forEach((proseVariant) => {
+    variants.forEach((variantSlug) => {
+      const cacheKey = getSpecCacheKey(proseVariant, variantSlug);
+      if (specCache.has(cacheKey)) return;
+      tasks.push(
+        fetchCharacterSpec(slug, proseVariant, variantSlug)
+          .then((spec) => {
+            specCache.set(cacheKey, spec);
+          })
+          .catch(() => {
+            specCache.set(cacheKey, null);
+          })
+      );
+    });
+  });
+  await Promise.all(tasks);
 }
 
 function setError(message) {
@@ -187,10 +214,22 @@ function renderSummary(state, variants, variantOptions) {
 
 async function updateSpecFields(slug, proseVariant, variantSlug) {
   if (!hasSpecFields()) return;
+  const cacheKey = getSpecCacheKey(proseVariant, variantSlug);
+  if (specCache.has(cacheKey)) {
+    const spec = specCache.get(cacheKey);
+    if (spec) {
+      setSpecFieldValues(spec);
+    } else {
+      setSpecFieldValues(null, 'Not available.');
+    }
+    return;
+  }
   try {
     const spec = await fetchCharacterSpec(slug, proseVariant, variantSlug);
+    specCache.set(cacheKey, spec);
     setSpecFieldValues(spec);
   } catch (error) {
+    specCache.set(cacheKey, null);
     setSpecFieldValues(null, 'Not available.');
   }
 }
@@ -477,6 +516,7 @@ async function loadCharacter() {
 
     renderSummary(state, variants, variantOptions);
     updateUrl(state);
+    await preloadSpecs(slug, proseVariants, variantSlugs);
     await updateSpecFields(slug, state.proseVariant, state.variantSlug);
 
     if (downloadPrimaryButton) {
