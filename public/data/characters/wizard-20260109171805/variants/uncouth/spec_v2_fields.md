@@ -77,13 +77,7 @@ system_prompt: |
     ]
   }
 tags:
-  - apprentice
-  - wizard
-  - magic
-  - garden
-  - mentor
-  - growth
   - fantasy
-  - young adult
----
+  - young-adult
+  - female
 ```

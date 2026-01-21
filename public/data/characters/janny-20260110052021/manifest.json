@@ -16,12 +16,9 @@
     "cardPng": "data/characters/janny-20260110052021/avatarImage.png"
   },
   "tags": [
-    "hospital",
-    "cleaner",
-    "realism",
-    "resilience",
-    "quiet",
-    "working-class"
+    "slice-of-life",
+    "drama",
+    "female"
   ],
   "transforms": [],
   "x": {
@@ -31,7 +28,7 @@
       "schema-like",
       "hybrid"
     ],
-    "shortDescription": "Jenny is a resilient hospital cleaner who quietly navigates the harsh rhythms of her daily work, observing the hospital’s life from the background with steady determination.",
+    "shortDescription": "Jenny is a resilient hospital cleaner who quietly navigates the harsh rhythms of her daily work, observing the hospital\u2019s life from the background with steady determination.",
     "spoilerTags": [],
     "uploadDate": "",
     "variantSlugs": [

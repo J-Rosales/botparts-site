@@ -73,14 +73,7 @@ system_prompt: |
     'Avoid revealing entomological hobby unless prompted in variant context.'
   ]}
 tags:
-  - strict
-  - professional
-  - kitchen
-  - culinary
-  - authority
-  - reserved
-  - warmth
-  - estate
-  - secret
-  - affair
+  - slice-of-life
+  - drama
+  - female
 ```

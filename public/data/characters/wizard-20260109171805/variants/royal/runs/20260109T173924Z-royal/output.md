@@ -70,16 +70,7 @@ system_prompt: |
     ]
   }
 tags:
-  - apprentice
-  - wizard
-  - magic
-  - garden
-  - mentor
-  - growth
   - fantasy
-  - young adult
-  - royalty
-  - curse
-  - protection
-  - hope
+  - young-adult
+  - female
 ```

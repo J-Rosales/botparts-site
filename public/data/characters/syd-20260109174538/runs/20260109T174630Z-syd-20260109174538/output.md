@@ -18,15 +18,8 @@
   "character_version": "2",
   "tags": [
     "fantasy",
-    "magic",
-    "wizard",
-    "apprentice",
-    "garden",
-    "nature",
-    "mentor",
-    "mystical",
-    "growth",
-    "resilience"
+    "young-adult",
+    "female"
   ]
 }
 ---SHORT_DESCRIPTION---
